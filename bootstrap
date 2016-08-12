@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+
+
+# Setup global dependencies
+# This assumes you have either a basic ubuntu install or ruby is already installed.
+# If you get complaints about npm install -g not being run as global, please use nvm, you shouldn't run node as root.
+function setupGlobals {
+    echo "Installing global dependencies";
+
+    # Install SASS
+    echo "gem install sass";
+    gem install sass
+
+    echo "npm install -g webpack babel";
+    npm install -g webpack babel
+}
+
+# Setup local dependencies
+function setupLocals {
+    echo "Installing local dependencies";
+
+    echo "npm install";
+    npm install
+}
+
+# Start development server
+function startDevServer {
+    echo "Starting development server (Press Control+C or Command+C to exit)";
+
+    echo "npm start";
+    npm start
+}
+
+setupGlobals
+setupLocals
+startDevServer

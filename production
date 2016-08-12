@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Build webpack
+function buildWebpackProduction {
+    echo "Building webpack production config";
+
+    echo "webpack -p --config webpack.production.config.js";
+    webpack -p --config webpack.production.config.js
+}
+
+# Serve Webpack
+function serveWebpackProduction {
+    echo "Starting production server";
+
+    echo "npm start";
+    npm start
+}
+
+buildWebpackProduction
+serveWebpackProduction

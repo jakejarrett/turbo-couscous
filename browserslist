@@ -1,0 +1,7 @@
+# Browsers that should be supported
+# If a component has its own browserslist file, that file will be used instead of this one.
+#
+# https://github.com/ai/browserslist
+
+IE >= 9
+Last 2 versions
