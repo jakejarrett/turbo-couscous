@@ -1,8 +1,4 @@
 import "./plugins";
-
-/**
- * Application
- */
 import App from "./app/app";
 
 /**
