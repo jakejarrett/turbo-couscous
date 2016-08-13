@@ -1,11 +1,9 @@
-/**
- * Route registration
- */
-import * as Mn from "backbone.marionette";
+import * as Marionette from "backbone.marionette";
 import HomeRoute from "../modules/pages/home/controllers/router";
 
-let LocalRouter = Mn.AppRouter.extend({});
+let LocalRouter = Marionette.AppRouter.extend({});
 
+/** Invoke the new router **/
 let Router = new LocalRouter();
 
 /**
@@ -15,6 +13,9 @@ let RouteRegistration = [
     new HomeRoute()
 ];
 
+/**
+ * Register the routes
+ */
 RouteRegistration.forEach(function(aRouteController){
     Router.processAppRoutes(aRouteController, aRouteController.appRoutes);
 });

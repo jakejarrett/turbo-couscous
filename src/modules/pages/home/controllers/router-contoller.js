@@ -1,5 +1,5 @@
 import * as Marionette from "marionette";
-import HomeView from '../views/home';
+import HomeView from "../views/home";
 import App from "app/app";
 
 let HomeRouterController = Marionette.Object.extend({

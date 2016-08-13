@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-
-
 # Setup global dependencies
 # This assumes you have either a basic ubuntu install or ruby is already installed.
-# If you get complaints about npm install -g not being run as global, please use nvm, you shouldn't run node as root.
+# If you get complaints about npm install -g not being run as root, please use nvm, you shouldn't run node as root.
 function setupGlobals {
     echo "Installing global dependencies";
 

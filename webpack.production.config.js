@@ -1,21 +1,21 @@
-var Webpack = require('webpack');
-var path = require('path');
-var nodeModulesPath = path.resolve(__dirname, 'node_modules');
-var buildPath = path.resolve(__dirname, 'public', 'build');
-var mainPath = path.resolve(__dirname, 'src', 'main.js');
+var Webpack = require("webpack");
+var path = require("path");
+var nodeModulesPath = path.resolve(__dirname, "node_modules");
+var buildPath = path.resolve(__dirname, "public", "build");
+var mainPath = path.resolve(__dirname, "src", "main.js");
 var srcPath = path.resolve(__dirname, "src");
 
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var autoprefixer = require("autoprefixer");
-var precss = require('precss');
+var precss = require("precss");
 
 var config = {
     // We change to normal source mapping, if you need them
-    devtool: 'source-map',
+    devtool: "source-map",
     entry: mainPath,
     output: {
         path: buildPath,
-        filename: 'bundle.js'
+        filename: "bundle.js"
     },
     module: {
         loaders: [

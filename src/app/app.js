@@ -6,6 +6,9 @@ import * as Marionette from "marionette";
 import LayoutView from "./layout_view";
 import Router from "./routes";
 
+/**
+ * Setup routers
+ */
 let globalChannel = Radio.channel("app");
 let routerChannel = Radio.channel("router");
 
@@ -30,7 +33,22 @@ let application = Marionette.Application.extend({
          * We should only have one body click event that is propagated via Backbone.Radio
          */
         $("body").on("click", function(ev){
-            globalChannel.trigger("onBodyClick", ev);
+            /**
+             * Triggers app:onBodyClick event
+             *
+             * @event app:onBodyClick
+             * @memberof App
+             * @example
+             * var globalChannel = Backbone.Radio.channel("global");
+             * var that = this;
+             *
+             * globalChannel.trigger("app:onBodyClick", function (e) {
+             *      if(e.target.name === 'submit-form') {
+             *          // Submit the form
+             *      }
+             * });
+             */
+            globalChannel.trigger("app:onBodyClick", ev);
         });
     }
 });
@@ -39,7 +57,7 @@ let application = Marionette.Application.extend({
 let App = new application();
 
 /**
- * Start route controller
+ * Start route controller and register a service worker
  */
 App.on("start", function() {
     if (Backbone.history) {
@@ -106,7 +124,7 @@ App.getContentContainer = function() {
  */
 App.layoutView.on("empty", function(view){
     globalChannel.trigger("app:pageChange");
-    globalChannel.off("onBodyClick");
+    globalChannel.off("app:onBodyClick");
 });
 
 /**

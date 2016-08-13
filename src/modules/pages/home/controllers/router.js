@@ -1,6 +1,6 @@
 import * as Marionette from "marionette";
 import HomeRouterController from "./router-contoller";
-import HomeView from '../views/home';
+import HomeView from "../views/home";
 import App from "app/app";
 
 /**

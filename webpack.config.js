@@ -4,9 +4,9 @@ var srcPath = path.resolve(__dirname, "src");
 var nodeModulesPath = path.resolve(__dirname, "node_modules");
 var buildPath = path.resolve(__dirname, "public", "build");
 
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var autoprefixer = require("autoprefixer");
-var precss = require('precss');
+var precss = require("precss");
 
 var config = {
     context: __dirname,

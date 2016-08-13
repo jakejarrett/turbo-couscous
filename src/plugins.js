@@ -1,9 +1,9 @@
 /**
  * Import plugins & setup marionette inspector.
  */
-import Backbone from 'backbone';
-import $ from 'jquery';
-import Marionette from 'backbone.marionette';
+import Backbone from "backbone";
+import $ from "jquery";
+import Marionette from "backbone.marionette";
 Backbone.$ = $;
 
 /**
