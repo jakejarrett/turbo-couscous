@@ -7,7 +7,7 @@ import LayoutView from "./layout_view";
 import Router from "./routes";
 
 /**
- * Setup routers
+ * Setup radio channels
  */
 let globalChannel = Radio.channel("app");
 let routerChannel = Radio.channel("router");
@@ -81,7 +81,8 @@ App.on("start", function() {
 });
 
 /**
- * Setup a region for the app.
+ * Setup a region for the app & expose it on the App namespace
+ * (Essentially providing a singleton)
  *
  * @protected
  */

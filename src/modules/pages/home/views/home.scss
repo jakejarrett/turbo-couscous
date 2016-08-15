@@ -1,8 +1,8 @@
 /** Styles **/
 .jumbotron {
-    background: transparentize(hotpink, 0.5);;
-    color: white;
+  background: transparentize(hotpink, 0.5);;
+  color: white;
 
-    /** Autoprefixer will append prefixes for us to support ie. **/
-    display: flex;
+  /** Autoprefixer will append prefixes for us to support ie. **/
+  display: flex;
 }
