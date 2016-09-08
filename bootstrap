@@ -10,8 +10,8 @@ function setupGlobals {
     echo "gem install sass";
     gem install sass
 
-    echo "npm install -g webpack babel";
-    npm install -g webpack babel
+    echo "npm install -g webpack babel-cli";
+    npm install -g webpack babel-cli
 }
 
 # Setup local dependencies
