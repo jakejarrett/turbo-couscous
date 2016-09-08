@@ -5,6 +5,7 @@ var nodeModulesPath = path.resolve(__dirname, "node_modules");
 var buildPath = path.resolve(__dirname, "public", "build");
 
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var DashboardPlugin = require('webpack-dashboard/plugin');
 var autoprefixer = require("autoprefixer");
 var precss = require("precss");
 
@@ -40,14 +41,17 @@ var config = {
             {
                 /** Compiles SASS and then Import the Compiled CSS **/
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract("style?singleton", "!css-loader?locals&sourceMap!postcss!sass?sourceMap")
-
+                loader: ExtractTextPlugin.extract({
+                    fallbackLoader: 'style?singleton',
+                    loader: '!css-loader?locals&sourceMap!postcss!sass?sourceMap'
+                })
             }
         ]
     },
 
     plugins: [
         new Webpack.HotModuleReplacementPlugin(),
+        new DashboardPlugin(),
         new ExtractTextPlugin("app.min.css")
     ],
 
