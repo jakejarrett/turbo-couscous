@@ -10,7 +10,7 @@ var precss = require("precss");
 
 var config = {
     context: __dirname,
-    devtool: "eval-source-map",
+    devtool: "source-map",
 
     entry: [
         "webpack-dev-server/client?http://localhost:3000",

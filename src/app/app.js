@@ -78,6 +78,11 @@ App.on("start", function() {
         });
     }
 
+    /**
+     * Hide loader
+     */
+    $(".loader").fadeOut();
+
 });
 
 /**

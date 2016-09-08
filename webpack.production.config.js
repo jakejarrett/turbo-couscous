@@ -39,7 +39,7 @@ var config = {
         ]
     },
     plugins: [
-        new Webpack.HotModuleReplacementPlugin(),
+        new Webpack.optimize.UglifyJsPlugin(),
         new ExtractTextPlugin("app.min.css")
     ],
 
