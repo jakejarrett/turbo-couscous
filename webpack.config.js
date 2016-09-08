@@ -31,6 +31,9 @@ var config = {
                 /** Compiles ES6 to ES5 **/
                 test: /\.js$/,
                 loader: "babel",
+                query: {
+                    presets: ["es2015"]
+                },
                 exclude: [nodeModulesPath]
             },
             {

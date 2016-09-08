@@ -23,6 +23,9 @@ var config = {
                 /** Compiles ES6 to ES5 **/
                 test: /\.js$/,
                 loader: "babel",
+                query: {
+                    presets: ["es2015"]
+                },
                 exclude: [nodeModulesPath]
             },
             {
@@ -39,7 +42,7 @@ var config = {
         ]
     },
     plugins: [
-        new Webpack.optimize.UglifyJsPlugin(),
+        new Webpack.optimize.UglifyJsPlugin({minimize: true}),
         new ExtractTextPlugin("app.min.css")
     ],
 
