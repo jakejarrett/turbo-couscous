@@ -1,17 +1,17 @@
 import App from "app/app";
 import * as Marionette from "marionette";
 import NavigationView from "modules/common/views/navigation/navigation";
-import Template from "./home.html";
-import Styles from "./home.scss";
+import Template from "./features.html";
+import Styles from "./features.scss";
 
 /**
- * Home view
+ * Features view
  *
- * @module modules/pages/home
+ * @module modules/pages/features
  */
-let HomeView = Marionette.View.extend({
+let FeaturesView = Marionette.View.extend({
 
-    className: "home",
+    className: "features",
 
     /**
      * Returns a rendered template
@@ -33,13 +33,13 @@ let HomeView = Marionette.View.extend({
         var Navigation =  new NavigationView();
         App.getNavigationContainer().show(Navigation);
 
-        Navigation.setItemAsActive("home");
+        Navigation.setItemAsActive("features");
     }
 });
 
 /**
  * Export the view
  *
- * @exports HomeView
+ * @exports FeaturesView
  */
-export default HomeView;
+export default FeaturesView;

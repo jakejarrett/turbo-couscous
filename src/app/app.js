@@ -28,7 +28,7 @@ let application = Marionette.Application.extend({
     /**
      * When the DOM is shown, lets bind an event listener for the body click.
      */
-    onShow: function() {
+    onShow () {
         /**
          * We should only have one body click event that is propagated via Backbone.Radio
          */
@@ -100,9 +100,7 @@ App.layoutView.render();
  * @returns {HTMLElement} The navigation region
  * @public
  */
-App.getNavigationContainer = function() {
-    return App.layoutView.getRegion("navigation");
-};
+App.getNavigationContainer = () => App.layoutView.getRegion("navigation");
 
 /**
  * Returns the content container
@@ -110,9 +108,7 @@ App.getNavigationContainer = function() {
  * @returns {HTMLElement} The navigation region
  * @public
  */
-App.getContentContainer = function() {
-    return App.layoutView.getRegion("content");
-};
+App.getContentContainer = () => App.layoutView.getRegion("content");
 
 /**
  * Notify the application when the page has changed
@@ -128,7 +124,7 @@ App.getContentContainer = function() {
  *      that.janitorialDuties();
  * });
  */
-App.layoutView.on("empty", function(view){
+App.layoutView.on("empty", (view) => {
     globalChannel.trigger("app:pageChange");
     globalChannel.off("app:onBodyClick");
 });
@@ -148,7 +144,7 @@ App.layoutView.on("empty", function(view){
  *      that.janitorialDuties();
  * });
  */
-App.layoutView.on("before:empty", function(view){
+App.layoutView.on("before:empty", (view) => {
     globalChannel.trigger("app:pageWillChange");
 });
 

@@ -21,7 +21,7 @@ var config = {
 
     output: {
         path: buildPath,
-        filename: "bundle.js",
+        filename: "[name].js",
         publicPath: "/build/"
     },
 
@@ -45,8 +45,8 @@ var config = {
                 /** Compiles SASS and then Import the Compiled CSS **/
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract({
-                    fallbackLoader: 'style?singleton',
-                    loader: '!css-loader?locals&sourceMap!postcss!sass?sourceMap'
+                    fallbackLoader: "style?singleton",
+                    loader: "!css-loader?locals&sourceMap!postcss!sass?sourceMap"
                 })
             }
         ]

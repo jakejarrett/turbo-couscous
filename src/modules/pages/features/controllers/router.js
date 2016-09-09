@@ -1,20 +1,20 @@
 import * as Marionette from "marionette";
-import HomeRouterController from "./router-contoller";
+import FeaturesRouterController from "./router-contoller";
 import App from "app/app";
 
 /**
- * Home page Router
+ * Features page Router
  *
- * @module modules/pages/home
+ * @module modules/pages/features
  */
-let HomeRouter = Marionette.AppRouter.extend({
+let FeaturesRoute = Marionette.AppRouter.extend({
 
     /**
      * Specify the controller
      *
      * @protected
      */
-    controller: new HomeRouterController,
+    controller: new FeaturesRouterController,
 
     /**
      * Routes
@@ -22,7 +22,7 @@ let HomeRouter = Marionette.AppRouter.extend({
      * @protected
      */
     appRoutes: {
-        "(/)": "startIndexRoute"
+        "features(/)": "startFeaturesRoute"
     },
 
     /**
@@ -30,17 +30,17 @@ let HomeRouter = Marionette.AppRouter.extend({
      *
      * @protected
      */
-    startIndexRoute: function () {
+    startFeaturesRoute () {
         if (typeof require.ensure == "function") {
             /* Asynchronous loading of a component that is inside of require.ensure */
             require.ensure([], (require) => {
-                var HomeView = require("../views/home");
-                App.getContentContainer().show(new HomeView.default());
+                var FeaturesView = require("../views/features");
+                App.getContentContainer().show(new FeaturesView.default());
             });
         } else {
             /* Server side synchronous loading */
-            var HomeView = require("../views/home");
-            App.getContentContainer().show(new HomeView.default());
+            var FeaturesView = require("../views/features");
+            App.getContentContainer().show(new FeaturesView.default());
         }
     }
 
@@ -51,4 +51,4 @@ let HomeRouter = Marionette.AppRouter.extend({
  *
  * @exports HomeRouter
  */
-export default HomeRouter;
+export default FeaturesRoute;
