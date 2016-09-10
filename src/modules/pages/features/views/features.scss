@@ -3,7 +3,7 @@
 
   /** Styles **/
   .jumbotron {
-    background: wheat;
+    background: transparentize(chocolate, 0.5);
     color: white;
 
     /** Autoprefixer will append prefixes for us to support ie. **/
