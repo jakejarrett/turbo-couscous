@@ -12,7 +12,7 @@ let FeaturesRouterController = Marionette.Object.extend({
      *
      * so if anyone has a fix for that, that'd be cool.
      */
-    startFeaturesRoute: function () {}
+    startFeaturesRoute () {}
 });
 
 /**

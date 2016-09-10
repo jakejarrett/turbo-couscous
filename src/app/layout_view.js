@@ -3,7 +3,7 @@ import _ from "underscore";
 import Template from "./layout-template.html";
 
 let ContentRegion = Marionette.Region.extend({
-    attachHtml(view) {
+    attachHtml (view) {
         /**
          * Fade the element in :)
          */

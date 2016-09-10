@@ -15,7 +15,7 @@ let NavigationView = Marionette.View.extend({
      *
      * @returns {Function} The rendered template
      */
-    template() {
+    template () {
         return _.template(Template);
     },
 
@@ -24,7 +24,7 @@ let NavigationView = Marionette.View.extend({
      *
      * @param item {String} Identifier for element you wish to find
      */
-    setItemAsActive(item) {
+    setItemAsActive (item) {
         this.$el.find(".active").removeClass("active");
         var $el = this.$el.find("#" + item);
         $el.addClass("active").children().html(`${$el.children().html()} <span class="sr-only">(current)</span>`);

@@ -30,7 +30,7 @@ let HomeRouter = Marionette.AppRouter.extend({
      *
      * @protected
      */
-    startIndexRoute: function () {
+    startIndexRoute () {
         if (typeof require.ensure == "function") {
             /**
              * Lazily load the features chunk of code

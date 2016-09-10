@@ -18,9 +18,7 @@ let RouteRegistration = [
 /**
  * Register the routes
  */
-RouteRegistration.forEach(function(aRouteController){
-    Router.processAppRoutes(aRouteController, aRouteController.appRoutes);
-});
+RouteRegistration.forEach((aRouteController) => Router.processAppRoutes(aRouteController, aRouteController.appRoutes));
 
 /**
  * Export the router
