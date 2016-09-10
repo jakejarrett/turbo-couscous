@@ -32,13 +32,18 @@ let HomeRouter = Marionette.AppRouter.extend({
      */
     startIndexRoute: function () {
         if (typeof require.ensure == "function") {
-            /* Asynchronous loading of a component that is inside of require.ensure */
+            /**
+             * Lazily load the features chunk of code
+             * (This is the only documented way to do this with ES6 as of writing this)
+             */
             require.ensure([], (require) => {
                 var HomeView = require("../views/home");
                 App.getContentContainer().show(new HomeView.default());
             });
         } else {
-            /* Server side synchronous loading */
+            /**
+             * Synchronously load the home view.
+             */
             var HomeView = require("../views/home");
             App.getContentContainer().show(new HomeView.default());
         }

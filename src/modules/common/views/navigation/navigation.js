@@ -26,7 +26,8 @@ let NavigationView = Marionette.View.extend({
      */
     setItemAsActive(item) {
         this.$el.find(".active").removeClass("active");
-        this.$el.find("#" + item).addClass("active");
+        var $el = this.$el.find("#" + item);
+        $el.addClass("active").children().html(`${$el.children().html()} <span class="sr-only">(current)</span>`);
     }
 });
 

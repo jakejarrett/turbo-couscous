@@ -105,7 +105,7 @@ App.getNavigationContainer = () => App.layoutView.getRegion("navigation");
 /**
  * Returns the content container
  *
- * @returns {HTMLElement} The navigation region
+ * @returns {HTMLElement} The content region
  * @public
  */
 App.getContentContainer = () => App.layoutView.getRegion("content");

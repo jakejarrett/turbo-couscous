@@ -5,7 +5,7 @@ var nodeModulesPath = path.resolve(__dirname, "node_modules");
 var buildPath = path.resolve(__dirname, "public", "build");
 
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var DashboardPlugin = require('webpack-dashboard/plugin');
+var DashboardPlugin = require("webpack-dashboard/plugin");
 var autoprefixer = require("autoprefixer");
 var precss = require("precss");
 
@@ -26,6 +26,12 @@ var config = {
     },
 
     module: {
+        preLoaders: [
+            {
+                test: /\.json$/,
+                loader: "json"
+            }
+        ],
         loaders: [
             {
                 /** Compiles ES6 to ES5 **/

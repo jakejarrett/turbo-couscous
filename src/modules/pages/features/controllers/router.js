@@ -32,13 +32,19 @@ let FeaturesRoute = Marionette.AppRouter.extend({
      */
     startFeaturesRoute () {
         if (typeof require.ensure == "function") {
-            /* Asynchronous loading of a component that is inside of require.ensure */
+
+            /**
+             * Lazily load the features chunk of code
+             * (This is the only documented way to do this with ES6 as of writing this)
+             */
             require.ensure([], (require) => {
                 var FeaturesView = require("../views/features");
                 App.getContentContainer().show(new FeaturesView.default());
             });
         } else {
-            /* Server side synchronous loading */
+            /**
+             * Synchronously load the features view.
+             */
             var FeaturesView = require("../views/features");
             App.getContentContainer().show(new FeaturesView.default());
         }
