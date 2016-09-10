@@ -11,6 +11,9 @@ import Styles from "./features.scss";
  */
 let FeaturesView = Marionette.View.extend({
 
+    /**
+     * Give the parent element a class
+     */
     className: "features",
 
     /**
@@ -22,6 +25,22 @@ let FeaturesView = Marionette.View.extend({
      */
     template (stylesheet) {
         return _.template(Template);
+    },
+
+    /**
+     * Hot module replacement.
+     * Get them while they're hot!
+     */
+    initialize () {
+        if(module.hot){
+            module.hot.accept("modules/common/views/navigation/navigation", function(){
+                /** Re require sub views **/
+                let Nav = require("modules/common/views/navigation/navigation");
+                let Navigation =  new Nav.default();
+                App.getNavigationContainer().show(Navigation);
+                Navigation.setItemAsActive("home");
+            });
+        }
     },
 
     /**

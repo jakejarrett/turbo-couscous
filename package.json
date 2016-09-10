@@ -4,7 +4,7 @@
   "description": "An opinionated boilerplate for Marionette, ES6 & SASS",
   "main": "server.js",
   "scripts": {
-    "start": "webpack-dashboard -- node server"
+    "start": "webpack-dashboard -- webpack-dev-server --content-base public --inline --host 0.0.0.0 --port 3000 --hot"
   },
   "keywords": [
     "express",

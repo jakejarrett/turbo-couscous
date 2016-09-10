@@ -1,7 +1,9 @@
 .home {
+  margin-top: 10px;
+
   /** Styles **/
   .jumbotron {
-    background: transparentize(hotpink, 0.5);;
+    background: transparentize(green, 0.5);
     color: white;
 
     /** Autoprefixer will append prefixes for us to support ie. **/
