@@ -32,7 +32,8 @@ let application = Marionette.Application.extend({
         /**
          * We should only have one body click event that is propagated via Backbone.Radio
          */
-        $("body").on("click", function(ev){
+        $("body").on("click", (ev) => {
+
             /**
              * Triggers app:onBodyClick event
              *
@@ -42,7 +43,7 @@ let application = Marionette.Application.extend({
              * var globalChannel = Backbone.Radio.channel("global");
              * var that = this;
              *
-             * globalChannel.trigger("app:onBodyClick", function (e) {
+             * globalChannel.trigger("app:onBodyClick", (e) => {
              *      if(e.target.name === 'submit-form') {
              *          // Submit the form
              *      }
@@ -59,7 +60,7 @@ let App = new application();
 /**
  * Start route controller and register a service worker
  */
-App.on("start", function() {
+App.on("start", () => {
     if (Backbone.history) {
         Backbone.history.start();
     }
@@ -69,13 +70,9 @@ App.on("start", function() {
      */
     if("serviceWorker" in navigator) {
         navigator.serviceWorker.register("./sw.js", { scope: "/" })
-            .then(function(registration) {
-                console.log("Service Worker Registered");
-            });
+            .then((registration) => console.log("Service Worker Registered"));
 
-        navigator.serviceWorker.ready.then(function(registration) {
-            console.log("Service Worker Ready");
-        });
+        navigator.serviceWorker.ready.then((registration) => console.log("Service Worker Ready"));
     }
 
     /**
@@ -119,10 +116,8 @@ App.getContentContainer = () => App.layoutView.getRegion("content");
  * var globalChannel = Backbone.Radio.channel("global");
  * var that = this;
  *
- * globalChannel.trigger("app:pageChange", function () {
- *      // Clean up, this could be something like grabbing the new model before rendering
- *      that.janitorialDuties();
- * });
+ * // Clean up the dom when the page changes
+ * globalChannel.trigger("app:pageChange", ()  => that.janitorialDuties());
  */
 App.layoutView.on("empty", (view) => {
     globalChannel.trigger("app:pageChange");
@@ -138,15 +133,10 @@ App.layoutView.on("empty", (view) => {
  * var globalChannel = Backbone.Radio.channel("global");
  * var that = this;
  *
- * globalChannel.trigger("app:pageWillChange", function () {
- *      // This could be something like removing a modal or tour guide that
- *      // is not controller by the app's region manager.
- *      that.janitorialDuties();
- * });
+ * // Clean up the dom before the page changes
+ * globalChannel.trigger("app:pageWillChange", ()  => that.janitorialDuties());
  */
-App.layoutView.on("before:empty", (view) => {
-    globalChannel.trigger("app:pageWillChange");
-});
+App.layoutView.on("before:empty", (view) => globalChannel.trigger("app:pageWillChange"));
 
 /**
  * Export the application
