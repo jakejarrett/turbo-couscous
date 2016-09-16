@@ -16,8 +16,8 @@ function setProductionEnvironments {
 function buildWebpackProduction {
     echo "Building webpack production config";
 
-    echo "webpack -p --config webpack.production.config.js";
-    webpack -p --config webpack.production.config.js
+    echo "webpack --config webpack.production.config.js";
+    webpack --config webpack.production.config.js
 }
 
 # Serve Webpack
