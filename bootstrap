@@ -22,14 +22,5 @@ function setupLocals {
     npm install
 }
 
-# Start development server
-function startDevServer {
-    echo "Starting development server (Press Control+C or Command+C to exit)";
-
-    echo "npm start";
-    npm start
-}
-
 setupGlobals
 setupLocals
-startDevServer

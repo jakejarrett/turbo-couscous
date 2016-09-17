@@ -1,6 +1,10 @@
 # Turbo Couscous :scream_cat:
 An opinionated [MarionetteJS 3](http://http://marionettejs.com/) Boilerplate.
 
+### Requirements
+- NodeJS
+    - v4+ (Use nvm)
+
 ### Tech
 - ES6 (Babel)
 - Webpack
