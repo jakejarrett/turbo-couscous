@@ -15,7 +15,8 @@ self.addEventListener("install", function(e) {
             return cache.addAll([
                 "/",
                 "/index.html",
-                "/build/main.js"
+                "/build/main.js",
+                "/build"
             ]).then(function() {
                 return self.skipWaiting();
             });

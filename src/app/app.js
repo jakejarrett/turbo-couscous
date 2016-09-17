@@ -62,17 +62,19 @@ let App = new application();
  */
 App.on("start", () => {
     if (Backbone.history) {
-        Backbone.history.start();
+        Backbone.history.start({
+            pushState: true
+        });
     }
 
     /**
      * Setup Service worker!
      */
     if("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js", { scope: "/" })
-            .then((registration) => console.log("Service Worker Registered"));
+        navigator.serviceWorker.register("/sw.js", { scope: "/" })
+            .then(registration => console.log("Service Worker Registered"));
 
-        navigator.serviceWorker.ready.then((registration) => console.log("Service Worker Ready"));
+        navigator.serviceWorker.ready.then(registration => console.log("Service Worker Ready"));
     }
 
     /**

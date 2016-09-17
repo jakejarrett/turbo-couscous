@@ -28,6 +28,17 @@ let FeaturesView = Marionette.View.extend({
     },
 
     /**
+     * When the template of the page has been updated, re render the template
+     * (This won't preserve state)
+     */
+    initialize () {
+        if(module.hot){
+            /** Require the template & re-render :) **/
+            module.hot.accept("./features.html", () => this.$el.html(_.template(require("./features.html"))));
+        }
+    },
+
+    /**
      * On render, we want to add the navigation
      *
      * @protected
