@@ -1,36 +1,36 @@
 importScripts("/build/cache-polyfill.js");
 
+'use strict';
+
 /**
- * Service Worker
+ * Strings for the service worker
+ *
+ * @type {string}
  */
-self.addEventListener("install", function(e) {
-    e.waitUntil(
-        /**
-         * Rename this to a unique identifier for your project (EG/ turbo-couscous)
-         */
-        caches.open("turbo-couscous").then(function(cache) {
-            /**
-             * We only need to list local resources, any external resources should get cached.
-             */
-            return cache.addAll([
-                "/",
-                "/index.html",
-                "/build/main.js"
-            ]).then(function() {
-                return self.skipWaiting();
-            });
-        })
-    );
-});
+const NAME = 'Turbo couscous';
+const VERSION = '0.1';
 
-self.addEventListener("activate", function(event) {
-    event.waitUntil(self.clients.claim());
-});
+self.oninstall = _ => {
+    self.skipWaiting();
+};
 
-self.addEventListener("fetch", function(event) {
-    event.respondWith(
-        caches.match(event.request).then(function(response) {
-            return response || fetch(event.request);
-        })
-    );
-});
+self.onactivate = _ => {
+    self.clients.claim();
+};
+
+/**
+ * On a fetch, we're going to cache the response so if we run that request again,
+ * we'll hit the cache if we're offline!
+ *
+ * @param evt
+ */
+self.onfetch = evt => {
+    evt.respondWith(caches.match(evt.request).then(response => response || fetch(evt.request)));
+
+    /** Open the cache with the name & version **/
+    caches.open(`${NAME}-v${VERSION}`).then(cache => {
+        /** Add each request to cache so if we go offline, the site works fine :) **/
+        cache.add(evt.request.url).then(_ => { return self.skipWaiting(); });
+    });
+};
+
