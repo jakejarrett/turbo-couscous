@@ -11,7 +11,16 @@ const NAME = 'Turbo couscous';
 const VERSION = '0.1';
 
 self.oninstall = _ => {
-    self.skipWaiting();
+    _.waitUntil(
+        /** Open the cache with the name & version **/
+        caches.open(`${NAME}-v${VERSION}`).then(cache => {
+            /** Add each request to cache so if we go offline, the site works fine :) **/
+            cache.addAll([
+                "/",
+                "/index.html"
+            ]).then(_ => { return self.skipWaiting(); });
+        })
+    );
 };
 
 self.onactivate = _ => {
