@@ -46,10 +46,10 @@ const helpers = {
 /** Server side rendering helpers **/
 const serverSideRendering = {
     // Matches paths like `/`, `/index.html`, `/about/` or `/about/index.html`.
-    toplevelSection: /([^/]*)(\/|\/index.html)$/,
+    toplevelSection: /([^/]*)(\/?|\/index.html)$/,
 
     // Regex to test if it contains /build/ inside of the url
-    isBuildSection: /(\/build)$/,
+    isBuildSection: /(\/build)/,
 
     urlNotFound (res) {
         let files = [
@@ -80,12 +80,29 @@ const serverSideRendering = {
     }
 };
 
+if(!helpers.isProduction()) {
+    /** Pull in the bundle so we can import Webpack dev & webpack hmr **/
+    var bundle = require("./server/bundle.js");
+
+    /** Instantiate bundle and pass in a reference to app. **/
+    bundle(app);
+
+    /**
+     * We're passing webpack dev commands to the server :)
+     */
+    app.all("/build/*", (req, res) => proxy.web(req, res, { target: "http://127.0.0.1:3001" }));
+    app.all("/socket.io*", (req, res) => proxy.web(req, res, { target: "http://127.0.0.1:3001" }));
+    proxy.on("error", (e) => console.log("Could not connect to proxy, please try again..."));
+}
+
 /**
  * Based on the code from the Google chrome live stream for Server side rendering
  *
  * @see https://github.com/GoogleChrome/ui-element-samples/blob/gh-pages/server-side-rendering/index.js
  */
 app.get(serverSideRendering.toplevelSection, (req, res) => {
+    const isBuild = serverSideRendering.isBuildSection.test(req.originalUrl);
+
     /**
      * Extract the menu item name from the path and attach it to
      * the request to have it available for template rendering.
@@ -93,7 +110,9 @@ app.get(serverSideRendering.toplevelSection, (req, res) => {
     req.item = req.params[0] || "home";
 
     // If its the build folder, return the request file :)
-    if(serverSideRendering.isBuildSection.exec(req.params[0])) res.send(req.params[0]);
+    if(isBuild && helpers.isProduction()) {
+        res.sendFile(`${helpers.getPublicPath()}/build/${req.params[0]}`)
+    }
 
     // Files to send.
     let files = [
@@ -120,9 +139,11 @@ app.get(serverSideRendering.toplevelSection, (req, res) => {
             res.send(content);
         })
         .catch(error => {
-            if(error.code === "ENOENT") {
+            // Sometimes the request for /build/ will hit here, so we'll add another guard for it.
+
+            if(error.code === "ENOENT" && !isBuild) {
                 res.status(404).send("File not found.");
-            } else {
+            } else if(!isBuild) {
                 res.status(500).send(error.toString());
             }
         });
@@ -132,19 +153,6 @@ app.get(serverSideRendering.toplevelSection, (req, res) => {
 app.use(express.static(helpers.getPublicPath()));
 
 if (!helpers.isProduction()) {
-    /** Pull in the bundle so we can import Webpack dev & webpack hmr **/
-    var bundle = require("./server/bundle.js");
-
-    /** Instantiate bundle and pass in a reference to app. **/
-    bundle(app);
-
-    /**
-     * We're passing webpack dev commands to the server :)
-     */
-    app.all("/build/*", (req, res) => proxy.web(req, res, { target: "http://127.0.0.1:3001" }));
-    app.all("/socket.io*", (req, res) => proxy.web(req, res, { target: "http://127.0.0.1:3001" }));
-    proxy.on("error", (e) => console.log("Could not connect to proxy, please try again..."));
-
     /**
      * We need to use basic HTTP service to proxy
      * websocket requests from webpack
