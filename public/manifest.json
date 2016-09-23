@@ -1,6 +1,6 @@
 {
-  "name": "Turbo Courscous",
-  "short_name": "Turbo Couscous",
+  "name": "Turbo Couscous",
+  "short_name": "TCC",
   "icons": [
     {
       "src": "assets/img/logo_256.png",
@@ -36,6 +36,6 @@
   "start_url": "/index.html",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#80c080",
-  "theme_color": "#80c080"
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff"
 }

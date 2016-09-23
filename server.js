@@ -51,6 +51,9 @@ const serverSideRendering = {
     // Regex to test if it contains /build/ inside of the url
     isBuildSection: /(\/build)/,
 
+    // Regex to test iof it contains /assets/ inside the url
+    isAssetsSection: /(\/assets)/,
+
     urlNotFound (res) {
         let files = [
             fs.readFile(`${helpers.getSourceFolder()}/modules/common/views/partials/header.partial.html`),
@@ -102,6 +105,10 @@ if(!helpers.isProduction()) {
  */
 app.get(serverSideRendering.toplevelSection, (req, res) => {
     const isBuild = serverSideRendering.isBuildSection.test(req.originalUrl);
+    const isServiceWorker = req.params[0] === "sw.js";
+    const isAssetsFolder = serverSideRendering.isAssetsSection.test(req.originalUrl);
+    const isManifestFile = req.params[0] === "manifest.json";
+    const shouldBuildFile = (!isBuild && !isServiceWorker && !isAssetsFolder && !isManifestFile);
 
     /**
      * Extract the menu item name from the path and attach it to
@@ -109,44 +116,59 @@ app.get(serverSideRendering.toplevelSection, (req, res) => {
      */
     req.item = req.params[0] || "home";
 
-    // If its the build folder, return the request file :)
+    // If its the build folder, return the requested file :)
     if(isBuild && helpers.isProduction()) {
         res.sendFile(`${helpers.getPublicPath()}/build/${req.params[0]}`)
     }
 
-    // Files to send.
-    let files = [
-        fs.readFile(`${helpers.getSourceFolder()}/modules/common/views/partials/header.partial.html`),
-        fs.readFile(`${helpers.getSourceFolder()}/modules/pages/${req.item}/views/${req.item}.html`),
-        fs.readFile(`${helpers.getSourceFolder()}/modules/common/views/partials/footer.partial.html`)
-    ];
+    // If its the assets folder, return the requested file :)
+    if(isAssetsFolder) {
+        res.sendFile(`${helpers.getPublicPath()}${req.originalUrl}`);
+    }
 
-    Promise.all(files)
-        .then(files => files.map(file => file.toString("utf-8")))
-        .then(files => files.map(file => _.template(file)(req)))
-        .then(files => {
-            const content = files.join("");
-            // Let's use sha256 as a means to get an ETag
-            const hash = crypto
-                .createHash("sha256")
-                .update(content)
-                .digest("hex");
+    /** If its a service worker or manifest file, just send the files :) **/
+    if(isServiceWorker || isManifestFile) {
+        res.sendFile(`${helpers.getPublicPath()}/${req.params[0]}`)
+    }
 
-            res.set({
-                "ETag": hash,
-                "Cache-Control": "public, no-cache"
+    /**
+     * To prevent issues, we'll only send the partials if its not the /build/ files & service workers.
+     */
+    if(shouldBuildFile) {
+        // Files to send.
+        let files = [
+            fs.readFile(`${helpers.getSourceFolder()}/modules/common/views/partials/header.partial.html`),
+            fs.readFile(`${helpers.getSourceFolder()}/modules/pages/${req.item}/views/${req.item}.html`),
+            fs.readFile(`${helpers.getSourceFolder()}/modules/common/views/partials/footer.partial.html`)
+        ];
+
+        Promise.all(files)
+            .then(files => files.map(file => file.toString("utf-8")))
+            .then(files => files.map(file => _.template(file)(req)))
+            .then(files => {
+                const content = files.join("");
+                // Let's use sha256 as a means to get an ETag
+                const hash = crypto
+                    .createHash("sha256")
+                    .update(content)
+                    .digest("hex");
+
+                res.set({
+                    "ETag": hash,
+                    "Cache-Control": "public, no-cache"
+                });
+                res.send(content);
+            })
+            .catch(error => {
+                // Sometimes the request for /build/ will hit here, so we'll add another guard for it.
+
+                if(error.code === "ENOENT") {
+                    res.status(404).send("File not found.");
+                } else if(!isBuild) {
+                    res.status(500).send(error.toString());
+                }
             });
-            res.send(content);
-        })
-        .catch(error => {
-            // Sometimes the request for /build/ will hit here, so we'll add another guard for it.
-
-            if(error.code === "ENOENT" && !isBuild) {
-                res.status(404).send("File not found.");
-            } else if(!isBuild) {
-                res.status(500).send(error.toString());
-            }
-        });
+    }
 });
 
 // Fallthrough

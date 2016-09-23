@@ -1,4 +1,4 @@
-importScripts("/build/cache-polyfill.js");
+importScripts("/assets/js/cache-polyfill.js");
 
 'use strict';
 
