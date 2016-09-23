@@ -7,9 +7,9 @@ function setProductionEnvironments {
     echo "export NODE_ENV=production";
     export NODE_ENV=production
 
-    # Set port as 1337
-    echo "export PORT=1337"
-    export PORT=1337
+    # Set port as 3009
+    echo "export PORT=3009"
+    export PORT=3009
 }
 
 # Build webpack
