@@ -57,7 +57,10 @@ var config = {
 
     plugins: [
         new Webpack.optimize.UglifyJsPlugin({minimize: true}),
-        new ExtractTextPlugin("app.min.css")
+        new ExtractTextPlugin({
+            filename: "../assets/css/[name].min.css",
+            allChunks: true
+        })
     ],
 
     postcss: function() {
