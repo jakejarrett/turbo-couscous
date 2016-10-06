@@ -23,24 +23,7 @@ class HomeRouter extends Marionette.AppRouter {
      * @protected
      */
     startIndexRoute () {
-
-        if (typeof require.ensure == "function") {
-            /**
-             * Lazily load the features chunk of code
-             * (This is the only documented way to do this with ES6 as of writing this)
-             */
-            require.ensure([], (require) => {
-                var HomeView = require("../views/home");
-                console.log(HomeView);
-                App.getContentContainer().show(new HomeView.default());
-            });
-        } else {
-            /**
-             * Synchronously load the home view.
-             */
-            var HomeView = require("../views/home");
-            App.getContentContainer().show(new HomeView.default());
-        }
+        System.import("../views/home").then(View => App.getContentContainer().show(new View.default()));
     }
 
 }

@@ -1,5 +1,6 @@
 import * as Backbone from "backbone";
 import * as Marionette from "marionette";
+import {active, template, on} from "modules/common/controllers/decorators";
 import Template from "./navigation.html";
 import Styles from "./navigation.scss";
 import Router from "app/routes";
@@ -9,17 +10,9 @@ import Router from "app/routes";
  *
  * @module modules/common/views/navigation
  */
-let NavigationView = Marionette.View.extend({
-
-    /** Initial state **/
-    active: "home",
-
-    /**
-     * Event handlers for the view
-     */
-    events: {
-        "click .nav-item": "onNavItemClick"
-    },
+@active("home")
+@template(Template)
+class NavigationView extends Marionette.View {
 
     /**
      * When the template of the page has been updated, re render the template
@@ -33,7 +26,7 @@ let NavigationView = Marionette.View.extend({
                 this.setItemAsActive(this.active);
             });
         }
-    },
+    }
 
     /**
      * Returns a rendered template
@@ -42,7 +35,7 @@ let NavigationView = Marionette.View.extend({
      */
     template () {
         return _.template(Template);
-    },
+    }
 
     /**
      * Remove active class from navigation and add active to a specified element
@@ -57,17 +50,18 @@ let NavigationView = Marionette.View.extend({
         this.$el.find(".active").removeClass("active");
         let $el = this.$el.find("#" + item);
         $el.addClass("active").children().html(`${$el.children().html()} <span class="sr-only">(current)</span>`);
-    },
+    }
 
     /**
      * When the nav item was clicked, we pass navigation to backbone instead.
      * @param e {Event} The click event
      */
+    @on("click .nav-item")
     onNavItemClick (e) {
         e.preventDefault();
         Router.navigate(e.target.getAttribute("href"), {trigger: true});
     }
-});
+}
 
 /**
  * Export the view

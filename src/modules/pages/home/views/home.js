@@ -1,6 +1,7 @@
 import App from "app/app";
 import * as Mn from "marionette";
 import NavigationView from "modules/common/views/navigation/navigation";
+import {className, tagName, template, on} from "modules/common/controllers/decorators";
 import Template from "./home.html";
 import Styles from "./home.scss";
 
@@ -10,22 +11,12 @@ import Styles from "./home.scss";
  * @module modules/pages/home
  * @exports HomeView
  */
+@className("home")
+@template(Template)
 class HomeView extends Mn.View {
 
     constructor (...args) {
         super(args);
-        this.className = "home";
-    }
-
-    /**
-     * Returns a rendered template
-     *
-     * @param stylesheet
-     * @returns {*|Function}
-     * @protected
-     */
-    static template (stylesheet) {
-        return _.template(Template);
     }
 
     /**

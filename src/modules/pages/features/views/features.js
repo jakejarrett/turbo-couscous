@@ -1,5 +1,6 @@
 import App from "app/app";
 import * as Marionette from "marionette";
+import {className, tagName, template, on} from "modules/common/controllers/decorators";
 import NavigationView from "modules/common/views/navigation/navigation";
 import Template from "./features.html";
 import Styles from "./features.scss";
@@ -9,23 +10,9 @@ import Styles from "./features.scss";
  *
  * @module modules/pages/features
  */
-let FeaturesView = Marionette.View.extend({
-
-    /**
-     * Give the parent element a class
-     */
-    className: "features",
-
-    /**
-     * Returns a rendered template
-     *
-     * @param stylesheet
-     * @returns {*|Function}
-     * @protected
-     */
-    template (stylesheet) {
-        return _.template(Template);
-    },
+@className("features")
+@template(Template)
+class FeaturesView extends Marionette.View {
 
     /**
      * When the template of the page has been updated, re render the template
@@ -36,7 +23,7 @@ let FeaturesView = Marionette.View.extend({
             /** Require the template & re-render :) **/
             module.hot.accept("./features.html", () => this.$el.html(_.template(require("./features.html"))));
         }
-    },
+    }
 
     /**
      * On render, we want to add the navigation
@@ -49,7 +36,7 @@ let FeaturesView = Marionette.View.extend({
 
         Navigation.setItemAsActive("features");
     }
-});
+}
 
 /**
  * Export the view

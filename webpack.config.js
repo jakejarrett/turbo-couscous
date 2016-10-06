@@ -4,13 +4,13 @@ var srcPath = path.resolve(__dirname, "src");
 var nodeModulesPath = path.resolve(__dirname, "node_modules");
 var buildPath = path.resolve(__dirname, "public", "build");
 
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var autoprefixer = require("autoprefixer");
 var precss = require("precss");
 
 var config = {
     context: __dirname,
     devtool: "source-map",
+    debug: true,
 
     entry: [
         "webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr",
@@ -24,18 +24,25 @@ var config = {
     },
 
     module: {
+
         preLoaders: [
             {
                 test: /\.json$/,
                 loader: "json"
             }
         ],
+
         loaders: [
             {
                 /** Compiles ES6 to ES5 **/
                 test: /\.js$/,
                 loader: "babel",
                 query: {
+                    plugins: [
+                        "transform-decorators-legacy",
+                        "syntax-decorators",
+                        "transform-decorators"
+                    ],
                     presets: ["es2016"]
                 },
                 exclude: [nodeModulesPath]
