@@ -7,23 +7,15 @@ import App from "app/app";
  *
  * @module modules/pages/home
  */
-let HomeRouter = Marionette.AppRouter.extend({
+class HomeRouter extends Marionette.AppRouter {
 
-    /**
-     * Specify the controller
-     *
-     * @protected
-     */
-    controller: new HomeRouterController,
-
-    /**
-     * Routes
-     *
-     * @protected
-     */
-    appRoutes: {
-        "(/)": "startIndexRoute"
-    },
+    constructor (...args) {
+        super(args);
+        this.controller = new HomeRouterController;
+        this.appRoutes = {
+            "(/)": "startIndexRoute"
+        };
+    }
 
     /**
      * When the (/) page route is hit, we want to run this
@@ -31,6 +23,7 @@ let HomeRouter = Marionette.AppRouter.extend({
      * @protected
      */
     startIndexRoute () {
+
         if (typeof require.ensure == "function") {
             /**
              * Lazily load the features chunk of code
@@ -38,6 +31,7 @@ let HomeRouter = Marionette.AppRouter.extend({
              */
             require.ensure([], (require) => {
                 var HomeView = require("../views/home");
+                console.log(HomeView);
                 App.getContentContainer().show(new HomeView.default());
             });
         } else {
@@ -49,7 +43,7 @@ let HomeRouter = Marionette.AppRouter.extend({
         }
     }
 
-});
+}
 
 /**
  *  Export the router

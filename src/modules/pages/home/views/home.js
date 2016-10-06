@@ -1,5 +1,5 @@
 import App from "app/app";
-import * as Marionette from "marionette";
+import * as Mn from "marionette";
 import NavigationView from "modules/common/views/navigation/navigation";
 import Template from "./home.html";
 import Styles from "./home.scss";
@@ -8,13 +8,14 @@ import Styles from "./home.scss";
  * Home view
  *
  * @module modules/pages/home
+ * @exports HomeView
  */
-let HomeView = Marionette.View.extend({
+class HomeView extends Mn.View {
 
-    /**
-     * Give the parent element a class
-     */
-    className: "home",
+    constructor (...args) {
+        super(args);
+        this.className = "home";
+    }
 
     /**
      * Returns a rendered template
@@ -23,9 +24,9 @@ let HomeView = Marionette.View.extend({
      * @returns {*|Function}
      * @protected
      */
-    template (stylesheet) {
+    static template (stylesheet) {
         return _.template(Template);
-    },
+    }
 
     /**
      * When the template of the page has been updated, re render the template
@@ -36,7 +37,7 @@ let HomeView = Marionette.View.extend({
             /** Require the template & re-render :) **/
             module.hot.accept("./home.html", () => this.$el.html(_.template(require("./home.html"))));
         }
-    },
+    }
 
     /**
      * On render, we want to add the navigation
@@ -48,11 +49,6 @@ let HomeView = Marionette.View.extend({
         App.getNavigationContainer().show(Navigation);
         Navigation.setItemAsActive("home");
     }
-});
+}
 
-/**
- * Export the view
- *
- * @exports HomeView
- */
 export default HomeView;
