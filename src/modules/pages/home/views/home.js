@@ -2,6 +2,7 @@ import App from "app/app";
 import * as Mn from "marionette";
 import NavigationView from "modules/common/views/navigation/navigation";
 import {className, tagName, template, on} from "modules/common/controllers/decorators";
+import DemoComponent from "modules/common/components/demo-component";
 import Template from "./home.html";
 import Styles from "./home.scss";
 
@@ -39,6 +40,24 @@ class HomeView extends Mn.View {
         let Navigation =  new NavigationView();
         App.getNavigationContainer().show(Navigation);
         Navigation.setItemAsActive("home");
+
+        this.registerComponent(DemoComponent, {
+            text: "This was registered on render!"
+        });
+    }
+
+    registerComponent (component, properties, appendTo) {
+        let Component = document.registerElement("demo-component", DemoComponent);
+
+        let elem = new Component;
+
+        elem.properties = properties;
+
+        if(!appendTo) {
+            this.$el.append(elem);
+        } else {
+            appendTo.append(elem);
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 import App from "app/app";
-import * as Marionette from "marionette";
+import * as Mn from "marionette";
 import {className, tagName, template, on} from "modules/common/controllers/decorators";
 import NavigationView from "modules/common/views/navigation/navigation";
 import Template from "./features.html";
@@ -12,16 +12,18 @@ import Styles from "./features.scss";
  */
 @className("features")
 @template(Template)
-class FeaturesView extends Marionette.View {
+class FeaturesView extends Mn.View {
 
     /**
      * When the template of the page has been updated, re render the template
      * (This won't preserve state)
      */
     initialize () {
-        if(module.hot){
+        var that = this;
+
+        if(module.hot) {
             /** Require the template & re-render :) **/
-            module.hot.accept("./features.html", () => this.$el.html(_.template(require("./features.html"))));
+            module.hot.accept("./features.html", () => that.$el.html(_.template(require("./features.html"))));
         }
     }
 
@@ -33,7 +35,6 @@ class FeaturesView extends Marionette.View {
     onRender () {
         var Navigation =  new NavigationView();
         App.getNavigationContainer().show(Navigation);
-
         Navigation.setItemAsActive("features");
     }
 }

@@ -41,7 +41,8 @@ var config = {
                     plugins: [
                         "transform-decorators-legacy",
                         "syntax-decorators",
-                        "transform-decorators"
+                        "transform-decorators",
+                        "transform-function-bind"
                     ],
                     presets: ["es2016"]
                 },

@@ -1,19 +1,16 @@
 import * as Marionette from "marionette";
 import App from "app/app";
 
-let HomeRouterController = Marionette.Object.extend({
+class HomeRouterController extends Marionette.Object {
 
     /**
      * Start index route
      *
-     * ok. so, this isn't related to the function, but if this function isn't here,
-     * marionette 3 will throw an error that the controller doesn't have a declaration of
-     * this function.
-     *
-     * so if anyone has a fix for that, that'd be cool.
+     * for some reason, router breaks if it doesn't have this present, but does not use this function anyway.
      */
     startIndexRoute () {}
-});
+
+}
 
 /**
  * Export the controller

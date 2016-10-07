@@ -1,4 +1,5 @@
 import * as Marionette from "marionette";
+import {controller, appRoute} from "modules/common/controllers/decorators";
 import HomeRouterController from "./router-contoller";
 import App from "app/app";
 
@@ -7,14 +8,11 @@ import App from "app/app";
  *
  * @module modules/pages/home
  */
+@controller(new HomeRouterController)
 class HomeRouter extends Marionette.AppRouter {
 
     constructor (...args) {
         super(args);
-        this.controller = new HomeRouterController;
-        this.appRoutes = {
-            "(/)": "startIndexRoute"
-        };
     }
 
     /**
@@ -22,6 +20,7 @@ class HomeRouter extends Marionette.AppRouter {
      *
      * @protected
      */
+    @appRoute("(/)")
     startIndexRoute () {
         System.import("../views/home").then(View => App.getContentContainer().show(new View.default()));
     }

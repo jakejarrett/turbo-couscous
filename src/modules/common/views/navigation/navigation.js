@@ -19,22 +19,15 @@ class NavigationView extends Marionette.View {
      * (This won't preserve state)
      */
     initialize () {
+        var that = this;
+
         if(module.hot){
             /** Require the template & re-render :) **/
             module.hot.accept("./navigation.html", () => {
-                this.$el.html(_.template(require("./navigation.html")));
-                this.setItemAsActive(this.active);
+                that.$el.html(_.template(require("./navigation.html")));
+                that.setItemAsActive(that.active);
             });
         }
-    }
-
-    /**
-     * Returns a rendered template
-     *
-     * @returns {Function} The rendered template
-     */
-    template () {
-        return _.template(Template);
     }
 
     /**
@@ -46,10 +39,15 @@ class NavigationView extends Marionette.View {
         /** Store active in memory **/
         this.active = item;
 
-        /** Don't look through the dom if we don't have to **/
-        this.$el.find(".active").removeClass("active");
+        this.$el.find(".active")
+            .removeClass("active")
+            .find(".sr-only")
+            .remove();
+
         let $el = this.$el.find("#" + item);
-        $el.addClass("active").children().html(`${$el.children().html()} <span class="sr-only">(current)</span>`);
+        $el.addClass("active")
+            .children()
+            .html(`${$el.children().html()} <span class="sr-only">(current)</span>`);
     }
 
     /**
