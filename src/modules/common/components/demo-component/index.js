@@ -1,4 +1,5 @@
 import Styles from "./style.scss";
+import * as Radio from "backbone.radio";
 
 /**
  * Entry point for demo-component
@@ -27,6 +28,19 @@ class DemoComponent extends HTMLElement {
 
     attachedCallback() {
         this.querySelector('.custom__demo-component').innerHTML = this.textValue != null ? this.textValue : this.dataset['text'];
+        Radio.channel("components:demo-component").trigger("attached");
+    }
+
+    attributeChangedCallback(attrName, oldValue, newValue) {
+        Radio.channel("components:demo-component").trigger("attributeChanged", {
+            attributeName: attrName,
+            previousAttribute: oldValue,
+            newAttribute: newValue
+        });
+    }
+
+    detachedCallback () {
+        Radio.channel("components:demo-component").trigger("detached");
     }
 
     set properties(prop) {

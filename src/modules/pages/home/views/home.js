@@ -3,6 +3,7 @@ import * as Mn from "marionette";
 import NavigationView from "modules/common/views/navigation/navigation";
 import {className, tagName, template, on} from "modules/common/controllers/decorators";
 import DemoComponent from "modules/common/components/demo-component";
+import * as Radio from "backbone.radio";
 import Template from "./home.html";
 import Styles from "./home.scss";
 
@@ -41,13 +42,19 @@ class HomeView extends Mn.View {
         App.getNavigationContainer().show(Navigation);
         Navigation.setItemAsActive("home");
 
-        this.registerComponent(DemoComponent, {
+        this.registerComponent("demo-component", DemoComponent, {
             text: "This was registered on render!"
         });
+
+
+        /**
+         * When the component gets rendered, it will send out an event saying that it was attached.
+         */
+        this["demo-component"].on("attached", () => console.log("Attached"))
     }
 
-    registerComponent (component, properties, appendTo) {
-        let Component = document.registerElement("demo-component", DemoComponent);
+    registerComponent (componentName, component, properties, appendTo) {
+        let Component = document.registerElement(componentName, DemoComponent);
 
         let elem = new Component;
 
@@ -58,6 +65,8 @@ class HomeView extends Mn.View {
         } else {
             appendTo.append(elem);
         }
+
+        this[componentName] = Radio.channel("components:demo-component");
     }
 }
 
