@@ -1,8 +1,9 @@
 import App from "app/app";
 import * as Mn from "marionette";
 import NavigationView from "modules/common/views/navigation/navigation";
-import {className, tagName, template, on} from "modules/common/controllers/decorators";
+import {attribute, className, tagName, template, on} from "modules/common/controllers/decorators";
 import DemoComponent from "modules/common/components/demo-component";
+import ComponentController from "modules/common/controllers/component-controller";
 import * as Radio from "backbone.radio";
 import Template from "./home.html";
 import Styles from "./home.scss";
@@ -15,6 +16,8 @@ import Styles from "./home.scss";
  */
 @className("home")
 @template(Template)
+@attribute("components", {})
+@attribute("componentChannels", {})
 class HomeView extends Mn.View {
 
     constructor (...args) {
@@ -45,28 +48,24 @@ class HomeView extends Mn.View {
         this.registerComponent("demo-component", DemoComponent, {
             text: "This was registered on render!"
         });
+    }
+
+    registerComponent (componentName, component, properties) {
+        let Component = new ComponentController;
+
+        Component.register(componentName, component, properties);
+
+        let demoElem = Component.registeredElem;
+
+        this.components[Component.componentName] = demoElem;
+        this.componentChannels[Component.componentName] = Radio.channel("components:demo-component");
+        this.$el.append(demoElem);
 
 
         /**
          * When the component gets rendered, it will send out an event saying that it was attached.
          */
-        this["demo-component"].on("attached", () => console.log("Attached"))
-    }
-
-    registerComponent (componentName, component, properties, appendTo) {
-        let Component = document.registerElement(componentName, DemoComponent);
-
-        let elem = new Component;
-
-        elem.properties = properties;
-
-        if(!appendTo) {
-            this.$el.append(elem);
-        } else {
-            appendTo.append(elem);
-        }
-
-        this[componentName] = Radio.channel("components:demo-component");
+        this.componentChannels[Component.componentName].on("attached", () => console.log("Attached"))
     }
 }
 

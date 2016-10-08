@@ -140,3 +140,21 @@ export function appRoute(eventName){
         return descriptor;
     };
 }
+
+/**
+ * Attribute decorator
+ *
+ * This provides a decorator for the any module to add in properties/attributes on the root.
+ *
+ * @param attribute {String} The attribute/property you wish to apply.
+ * @param value {String} The initial value of the property/attribute.
+ * @returns {Function} The active decorator
+ */
+export function attribute(attribute, value) {
+    /**
+     * Return a decorator function
+     */
+    return function decorator(target) {
+        target.prototype[attribute] = value;
+    };
+}
