@@ -3,7 +3,7 @@ An opinionated [MarionetteJS 3](http://http://marionettejs.com/) Boilerplate.
 
 ### Requirements
 - NodeJS
-    - v4+ (Use nvm)
+    - v4+ (Use [nvm](https://github.com/creationix/nvm))
 
 ### Tech
 - ES6 (Babel)
