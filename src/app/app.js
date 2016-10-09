@@ -4,6 +4,7 @@ import Radio from "backbone.radio";
 import Backbone from "backbone";
 import * as Marionette from "marionette";
 import LayoutView from "./layout_view";
+import ComponentController from "modules/common/controllers/component-controller";
 import Router from "./routes";
 
 /**
@@ -139,6 +140,11 @@ App.layoutView.on("empty", (view) => {
  * globalChannel.trigger("app:pageWillChange", ()  => that.janitorialDuties());
  */
 App.layoutView.on("before:empty", (view) => globalChannel.trigger("app:pageWillChange"));
+
+/**
+ * Provide a singleton component controller for the app.
+ */
+App.Compontents = new ComponentController;
 
 /**
  * Export the application

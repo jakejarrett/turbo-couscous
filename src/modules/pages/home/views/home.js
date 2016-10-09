@@ -3,7 +3,6 @@ import * as Mn from "marionette";
 import NavigationView from "modules/common/views/navigation/navigation";
 import {attribute, className, tagName, template, on} from "modules/common/controllers/decorators";
 import DemoComponent from "modules/common/components/demo-component";
-import ComponentController from "modules/common/controllers/component-controller";
 import * as Radio from "backbone.radio";
 import Template from "./home.html";
 import Styles from "./home.scss";
@@ -48,24 +47,27 @@ class HomeView extends Mn.View {
         this.registerComponent("demo-component", DemoComponent, {
             text: "This was registered on render!"
         });
+
+        /** We can listen to events emitted by the component. **/
+        this.componentChannels["demo-component"].on("attached", () => console.log("Attached"))
     }
 
+    /**
+     * Register the component.
+     *
+     * @param componentName
+     * @param component
+     * @param properties
+     */
     registerComponent (componentName, component, properties) {
-        let Component = new ComponentController;
-
+        let Component = App.Compontents;
         Component.register(componentName, component, properties);
 
-        let demoElem = Component.registeredElem;
+        let demoElem = Component.getComponent(componentName);
 
-        this.components[Component.componentName] = demoElem;
-        this.componentChannels[Component.componentName] = Radio.channel("components:demo-component");
-        this.$el.append(demoElem);
-
-
-        /**
-         * When the component gets rendered, it will send out an event saying that it was attached.
-         */
-        this.componentChannels[Component.componentName].on("attached", () => console.log("Attached"))
+        this.components[demoElem.elementName] = demoElem.component;
+        this.componentChannels[demoElem.elementName] = Radio.channel("components:demo-component");
+        this.$el.append(demoElem.component);
     }
 }
 
