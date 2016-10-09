@@ -38,7 +38,11 @@ class ComponentController extends Mn.Object {
         let Component = document.registerElement(componentName, component);
 
         let elem = new Component;
-        elem.properties = properties;
+
+        if(undefined !== properties) {
+            elem.properties = properties;
+        }
+
         this.components[componentName] = {
             component: elem,
             elementName: componentName

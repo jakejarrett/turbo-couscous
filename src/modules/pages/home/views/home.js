@@ -3,6 +3,7 @@ import * as Mn from "marionette";
 import NavigationView from "modules/common/views/navigation/navigation";
 import {attribute, className, tagName, template, on} from "modules/common/controllers/decorators";
 import DemoComponent from "modules/common/components/demo-component";
+import LoginComponent from "modules/common/components/login-component";
 import * as Radio from "backbone.radio";
 import Template from "./home.html";
 import Styles from "./home.scss";
@@ -41,33 +42,38 @@ class HomeView extends Mn.View {
      */
     onRender () {
         let Navigation =  new NavigationView();
+        let $componentContainer = this.$el.find("#component-container");
         App.getNavigationContainer().show(Navigation);
         Navigation.setItemAsActive("home");
 
-        this.registerComponent("demo-component", DemoComponent, {
+        this.registerComponent("demo-component", DemoComponent, $componentContainer, {
             text: "This was registered on render!"
         });
 
+        this.registerComponent("login-component", LoginComponent, $componentContainer);
+
         /** We can listen to events emitted by the component. **/
-        this.componentChannels["demo-component"].on("attached", () => console.log("Attached"))
+        this.componentChannels["demo-component"].on("attached", component => console.log("Attached", component))
+        this.componentChannels["login-component"].on("attached", component => console.log("Attached", component))
     }
 
     /**
      * Register the component.
      *
-     * @param componentName
-     * @param component
-     * @param properties
+     * @param componentName {String} Name the component will be registered under.
+     * @param component {HTMLElement} The component you're registering.
+     * @param el {jQuery} Container/Element you're putting the component into.
+     * @param properties {Object} Properties you wish to apply to the component.
      */
-    registerComponent (componentName, component, properties) {
+    registerComponent (componentName, component, el, properties) {
         let Component = App.Compontents;
         Component.register(componentName, component, properties);
 
         let demoElem = Component.getComponent(componentName);
 
         this.components[demoElem.elementName] = demoElem.component;
-        this.componentChannels[demoElem.elementName] = Radio.channel("components:demo-component");
-        this.$el.append(demoElem.component);
+        this.componentChannels[demoElem.elementName] = Radio.channel(`components:${componentName}`);
+        el.append(demoElem.component);
     }
 }
 

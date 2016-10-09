@@ -19,7 +19,7 @@ class DemoComponent extends HTMLElement {
     createdCallback () {
         this.innerHTML = `
             <div>
-                <h1 class="custom__demo-component">
+                <h1 class="component__demo-component">
                     Demo component!
                 </h1>
             </div>
@@ -27,8 +27,8 @@ class DemoComponent extends HTMLElement {
     }
 
     attachedCallback() {
-        this.querySelector('.custom__demo-component').innerHTML = this.textValue != null ? this.textValue : this.dataset['text'];
-        Radio.channel("components:demo-component").trigger("attached");
+        this.querySelector('.component__demo-component').innerHTML = this.textValue != null ? this.textValue : this.dataset['text'];
+        Radio.channel("components:demo-component").trigger("attached", this);
     }
 
     attributeChangedCallback(attrName, oldValue, newValue) {

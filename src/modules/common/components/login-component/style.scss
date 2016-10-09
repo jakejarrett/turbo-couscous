@@ -1,0 +1,24 @@
+#component__login-view {
+
+  input {
+    margin-bottom: 10px;
+
+    &#username {
+      color: #fff;
+      background: #333;
+    }
+
+    &#password {
+      color: #fff;
+      background: #333;
+    }
+  }
+
+  button {
+    &#login-button {
+      color: #fff;
+      background: #333;
+    }
+  }
+
+}
