@@ -29,9 +29,17 @@ class HomeView extends Mn.View {
      * (This won't preserve state)
      */
     initialize () {
+        var that = this;
         if(module.hot){
             /** Require the template & re-render :) **/
             module.hot.accept("./home.html", () => this.$el.html(_.template(require("./home.html"))));
+            module.hot.accept("modules/common/components/login-component", () => {
+                that.registerComponent(
+                    "login-component",
+                    System.import("modules/common/components/login-component"),
+                    that.$el.find("#component-container")
+                );
+            });
         }
     }
 

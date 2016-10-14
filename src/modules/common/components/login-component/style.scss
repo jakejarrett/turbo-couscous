@@ -1,24 +1,26 @@
-#component__login-view {
+login-component {
+  & :host {
 
-  input {
-    margin-bottom: 10px;
+    input {
+      margin-bottom: 10px;
 
-    &#username {
-      color: #fff;
-      background: #333;
+      &#username {
+        color: #fff;
+        background: #333;
+      }
+
+      &#password {
+        color: #fff;
+        background: #333;
+      }
     }
 
-    &#password {
-      color: #fff;
-      background: #333;
+    button {
+      &#login-button {
+        color: #fff;
+        background: #333;
+      }
     }
+
   }
-
-  button {
-    &#login-button {
-      color: #fff;
-      background: #333;
-    }
-  }
-
 }

@@ -15,6 +15,16 @@ class HomeRouter extends Marionette.AppRouter {
         super(args);
     }
 
+    initialize () {
+        var that = this;
+
+        if(module.hot) {
+            module.hot.accept("../views/home", () => {
+                System.import("../views/home").then(View => App.getContentContainer().show(new View.default()));
+            });
+        }
+    }
+
     /**
      * When the (/) page route is hit, we want to run this
      *

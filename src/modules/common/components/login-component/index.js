@@ -1,29 +1,25 @@
 import Template from "./index.html";
-import Styles from "./style.scss";
+import * as Styles from "./style.scss";
 import * as Radio from "backbone.radio";
 
 /**
  * Entry point for login component
  */
-class LoginComponent extends HTMLElement {
-
-    /**
-     * Always call to super in HTMLElement so we inherit the original Element.
-     */
-    constructor () {
-        super();
-    }
+class LoginComponent extends HTMLFormElement {
 
     /**
      * When the element is initialized, we'll create the element
      */
     createdCallback () {
         let template = _.template(Template)();
-        this.innerHTML = template;
+        let shadowDom = this.createShadowRoot();
+        console.log(shadowDom);
+        shadowDom.innerHTML = `${template}`;
     }
 
     attachedCallback() {
         Radio.channel("components:login-component").trigger("attached", this);
+        this.style = "input { background: red; }"
     }
 
     attributeChangedCallback(attrName, oldValue, newValue) {
@@ -40,6 +36,10 @@ class LoginComponent extends HTMLElement {
 
     get text() {
         return this.textValue;
+    }
+
+    set style (stylesheet) {
+        return this;
     }
 
 }
