@@ -1,7 +1,7 @@
-import * as Marionette from "marionette";
+import Marionette, { Object } from "marionette";
 import App from "app/app";
 
-class HomeRouterController extends Marionette.Object {
+class HomeRouterController extends Object {
 
     /**
      * Start index route

@@ -1,4 +1,4 @@
-import * as Marionette from "marionette";
+import Marionette, { AppRouter } from "marionette";
 import {controller, appRoute} from "modules/common/controllers/decorators";
 import FeaturesRouterController from "./router-contoller";
 import App from "app/app";
@@ -9,7 +9,7 @@ import App from "app/app";
  * @module modules/pages/features
  */
 @controller(new FeaturesRouterController)
-class FeaturesRoute extends Marionette.AppRouter {
+class FeaturesRoute extends AppRouter {
 
     constructor (...args) {
         super(args);

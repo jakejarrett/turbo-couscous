@@ -1,5 +1,5 @@
 import * as Backbone from "backbone";
-import * as Marionette from "marionette";
+import Marionette, { View } from "marionette";
 import {active, template, on} from "modules/common/controllers/decorators";
 import Template from "./navigation.html";
 import Styles from "./navigation.scss";
@@ -12,7 +12,7 @@ import Router from "app/routes";
  */
 @active("home")
 @template(Template)
-class NavigationView extends Marionette.View {
+class NavigationView extends View {
 
     /**
      * When the template of the page has been updated, re render the template

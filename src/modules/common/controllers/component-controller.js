@@ -1,8 +1,8 @@
-import * as Mn from "backbone.marionette";
+import Marionette, { Object } from "marionette";
 import {attribute} from "modules/common/controllers/decorators";
 
 @attribute("components", {})
-class ComponentController extends Mn.Object {
+class ComponentController extends Object {
 
     constructor (...args) {
         super(...args);

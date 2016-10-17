@@ -11,14 +11,14 @@ class LoginComponent extends HTMLFormElement {
      * When the element is initialized, we'll create the element
      */
     createdCallback () {
-        console.log(Styles);
         let template = _.template(Template)();
-        this.createShadowRoot().innerHTML = `<style>${Styles.toString()}</style>${template}`;
+        let shadowRoot = this.createShadowRoot();
+        /** Add the styles directly into the shadow root & then append the rendered template **/
+        shadowRoot.innerHTML = `<style>${Styles.toString()}</style>${template}`;
     }
 
     attachedCallback() {
         Radio.channel("components:login-component").trigger("attached", this);
-        this.style = "input { background: red; }"
     }
 
     attributeChangedCallback(attrName, oldValue, newValue) {
@@ -36,11 +36,6 @@ class LoginComponent extends HTMLFormElement {
     get text() {
         return this.textValue;
     }
-
-    set style (stylesheet) {
-        return this;
-    }
-
 }
 
 /**

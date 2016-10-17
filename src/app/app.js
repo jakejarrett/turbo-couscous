@@ -2,7 +2,7 @@ import $ from "jquery";
 import _ from "lodash";
 import Radio from "backbone.radio";
 import Backbone from "backbone";
-import * as Marionette from "marionette";
+import Marionette, { Application } from "marionette";
 import LayoutView from "./layout_view";
 import ComponentController from "modules/common/controllers/component-controller";
 import Router from "./routes";

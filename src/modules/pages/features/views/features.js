@@ -1,5 +1,5 @@
 import App from "app/app";
-import * as Mn from "marionette";
+import Marionette, { View } from "marionette";
 import {className, tagName, template, on} from "modules/common/controllers/decorators";
 import NavigationView from "modules/common/views/navigation/navigation";
 import Template from "./features.html";
@@ -12,7 +12,7 @@ import Styles from "./features.scss";
  */
 @className("features")
 @template(Template)
-class FeaturesView extends Mn.View {
+class FeaturesView extends View {
 
     /**
      * When the template of the page has been updated, re render the template

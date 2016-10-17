@@ -1,5 +1,5 @@
 import App from "app/app";
-import * as Mn from "marionette";
+import Marionette, { View } from "marionette";
 import NavigationView from "modules/common/views/navigation/navigation";
 import {attribute, className, tagName, template, on} from "modules/common/controllers/decorators";
 import DemoComponent from "modules/common/components/demo-component";
@@ -18,7 +18,7 @@ import Styles from "./home.scss";
 @template(Template)
 @attribute("components", {})
 @attribute("componentChannels", {})
-class HomeView extends Mn.View {
+class HomeView extends View {
 
     constructor (...args) {
         super(args);

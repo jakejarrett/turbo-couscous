@@ -1,7 +1,7 @@
-import * as Marionette from "marionette";
+import Marionette, { Object } from "marionette";
 import App from "app/app";
 
-class FeaturesRouterController extends Marionette.Object {
+class FeaturesRouterController extends Object {
 
     /**
      * Start features route
