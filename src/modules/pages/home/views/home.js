@@ -39,6 +39,8 @@ class HomeView extends Mn.View {
                     System.import("modules/common/components/login-component"),
                     that.$el.find("#component-container")
                 );
+
+                that.render();
             });
         }
     }

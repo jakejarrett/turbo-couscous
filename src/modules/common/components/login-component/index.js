@@ -1,5 +1,5 @@
 import Template from "./index.html";
-import * as Styles from "./style.scss";
+import * as Styles from "!css?modules!sass!./style.scss";
 import * as Radio from "backbone.radio";
 
 /**
@@ -11,10 +11,9 @@ class LoginComponent extends HTMLFormElement {
      * When the element is initialized, we'll create the element
      */
     createdCallback () {
+        console.log(Styles);
         let template = _.template(Template)();
-        let shadowDom = this.createShadowRoot();
-        console.log(shadowDom);
-        shadowDom.innerHTML = `${template}`;
+        this.createShadowRoot().innerHTML = `<style>${Styles.toString()}</style>${template}`;
     }
 
     attachedCallback() {

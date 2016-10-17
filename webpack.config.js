@@ -56,7 +56,7 @@ var config = {
             {
                 /** Compiles SASS and then Import the Compiled CSS **/
                 test: /\.scss$/,
-                loader: ["style", "css?locals&sourceMap", "postcss", "sass?sourceMap"]
+                loader: ["style", "css?modules&importLoaders=1&localIdentName", "postcss", "sass?sourceMap"]
             }
         ]
     },
