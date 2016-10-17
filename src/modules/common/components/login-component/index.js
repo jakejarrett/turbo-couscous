@@ -15,6 +15,7 @@ class LoginComponent extends HTMLFormElement {
         let shadowRoot = this.createShadowRoot();
         /** Add the styles directly into the shadow root & then append the rendered template **/
         shadowRoot.innerHTML = `<style>${Styles.toString()}</style>${template}`;
+
     }
 
     attachedCallback() {
@@ -31,6 +32,14 @@ class LoginComponent extends HTMLFormElement {
 
     detachedCallback () {
         Radio.channel("components:login-component").trigger("detached");
+    }
+
+    updateElement () {
+        let Stylesheet = require("!css?modules!sass!./style.scss");
+        let template = _.template(Template)();
+        let shadowRoot = this.shadowRoot;
+        /** Add the styles directly into the shadow root & then append the rendered template **/
+        shadowRoot.innerHTML = `<style>${Stylesheet.toString()}</style>${template}`;
     }
 
     get text() {
