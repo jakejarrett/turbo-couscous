@@ -10,7 +10,6 @@ var precss = require("precss");
 var config = {
     context: __dirname,
     devtool: "source-map",
-    debug: true,
 
     entry: [
         "webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr",
@@ -25,14 +24,13 @@ var config = {
 
     module: {
 
-        preLoaders: [
+        rules: [
             {
+                enforce: "pre",
                 test: /\.json$/,
                 loader: "json"
-            }
-        ],
+            },
 
-        loaders: [
             {
                 /** Compiles ES6 to ES5 **/
                 test: /\.js$/,
@@ -62,12 +60,13 @@ var config = {
     },
 
     plugins: [
-        new Webpack.HotModuleReplacementPlugin()
+        new Webpack.HotModuleReplacementPlugin(),
+        new Webpack.LoaderOptionsPlugin({
+            postcss: function() {
+                return [autoprefixer, precss];
+            }
+        })
     ],
-
-    postcss: function() {
-        return [autoprefixer, precss];
-    },
 
     resolve: {
         alias: {

@@ -34,13 +34,7 @@ class HomeView extends View {
             /** Require the template & re-render :) **/
             module.hot.accept("./home.html", () => this.$el.html(_.template(require("./home.html"))));
             module.hot.accept("modules/common/components/login-component", () => {
-                that.registerComponent(
-                    "login-component",
-                    System.import("modules/common/components/login-component"),
-                    that.$el.find("#component-container")
-                );
-
-                that.render();
+                that.components["login-component"].updateElement();
             });
         }
     }
@@ -60,6 +54,7 @@ class HomeView extends View {
         this.registerComponent("login-component", LoginComponent, $componentContainer);
 
         /** We can listen to events emitted by the component. **/
+        this.componentChannels["demo-component"].on("attached", component => console.log("Attached", component));
         this.componentChannels["login-component"].on("attached", component => console.log("Attached", component));
     }
 
