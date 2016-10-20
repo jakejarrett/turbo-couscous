@@ -1,6 +1,6 @@
-import Backbone from "backbone";
 import Styles from "!css?modules!sass!./style.scss";
 import Template from "./index.html";
+import {on} from "../controllers/decorators";
 import Component from "marionette.component";
 
 /**
@@ -11,8 +11,7 @@ class DemoComponent extends Component {
     /**
      * Setup our component.
      */
-    constructor () {
-        const elementName = "hello-world";
+    constructor (elementName) {
         const renderedTemplate = _.template(Template)();
 
         super({
@@ -22,9 +21,12 @@ class DemoComponent extends Component {
         });
 
         return this.element;
-
     }
 
+    @on("click")
+    onUserClick (event) {
+        console.log("hello", event);
+    }
 }
 
 /**

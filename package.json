@@ -38,6 +38,7 @@
     "jquery": "^2.1.4",
     "json-loader": "^0.5.4",
     "lodash": "^3.10.1",
+    "marionette.component": "git+https://github.com/jakejarrett/Marionette.Component.git",
     "mz": "^2.4.0",
     "node-sass": "^3.8.0",
     "postcss-loader": "^0.9.1",

@@ -33,7 +33,7 @@ class HomeView extends View {
         if(module.hot){
             /** Require the template & re-render :) **/
             module.hot.accept("./home.html", () => this.$el.html(_.template(require("./home.html"))));
-            module.hot.accept("modules/common/components/login-component", () => {
+            module.hot.accept("modules/common/components/login-component", elem => {
                 that.components["login-component"].updateElement();
             });
         }

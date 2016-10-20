@@ -1,7 +1,6 @@
+import Component from "marionette.component";
 import Template from "./index.html";
 import * as Styles from "!css?modules!sass!./style.scss";
-import * as Radio from "backbone.radio";
-import Component from "marionette.component";
 
 /**
  * Entry point for login component
