@@ -57,10 +57,10 @@ class HomeView extends View {
         Navigation.setItemAsActive("home");
 
         this.registerComponent("demo-component", DemoComponent, $componentContainer);
-        // this.registerComponent("login-component", LoginComponent, $componentContainer);
+        this.registerComponent("login-component", LoginComponent, $componentContainer);
 
         /** We can listen to events emitted by the component. **/
-        // this.componentChannels["login-component"].on("attached", component => console.log("Attached", component));
+        this.componentChannels["login-component"].on("attached", component => console.log("Attached", component));
     }
 
     /**

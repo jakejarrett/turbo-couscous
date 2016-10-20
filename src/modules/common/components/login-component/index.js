@@ -1,41 +1,29 @@
 import Template from "./index.html";
 import * as Styles from "!css?modules!sass!./style.scss";
 import * as Radio from "backbone.radio";
+import Component from "marionette.component";
 
 /**
  * Entry point for login component
  */
-class LoginComponent extends HTMLFormElement {
+class LoginComponent extends Component {
 
     /**
-     * When the element is initialized, we'll create the element
+     * Setup our component.
      */
-    createdCallback () {
-        let template = _.template(Template)();
-        let shadowRoot = this.createShadowRoot();
-        /** Add the styles directly into the shadow root & then append the rendered template **/
-        shadowRoot.innerHTML = `<style>${Styles.toString()}</style>${template}`;
-    }
+    constructor () {
+        const elementName = "hello-world";
+        const renderedTemplate = _.template(Template)();
 
-    attachedCallback() {
-        Radio.channel("components:login-component").trigger("attached", this);
-    }
-
-    attributeChangedCallback(attrName, oldValue, newValue) {
-        Radio.channel("components:login-component").trigger("attributeChanged", {
-            attributeName: attrName,
-            previousAttribute: oldValue,
-            newAttribute: newValue
+        super({
+            elementName: elementName,
+            element: renderedTemplate,
+            stylesheet: Styles
         });
+
+        return this.element;
     }
 
-    detachedCallback () {
-        Radio.channel("components:login-component").trigger("detached");
-    }
-
-    get text() {
-        return this.textValue;
-    }
 }
 
 /**

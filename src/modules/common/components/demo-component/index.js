@@ -9,7 +9,7 @@ import Component from "marionette.component";
 class DemoComponent extends Component {
 
     /**
-     * Always call to super in HTMLElement so we inherit the original Element.
+     * Setup our component.
      */
     constructor () {
         const elementName = "hello-world";

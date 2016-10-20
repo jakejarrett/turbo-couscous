@@ -1,9 +1,21 @@
-import Marionette, { Object } from "marionette";
-import {attribute} from "modules/common/controllers/decorators";
+import Marionette from "marionette";
+import {attribute} from "./decorators";
 
-@attribute("components", {})
-class ComponentController extends Object {
+/**
+ * Marionette Component controller.
+ *
+ * This abstracts out a fair chunk of the boilerplate code that's associated with using Web Components.
+ *
+ * @author Jake Jarrett <jakeryanjarrett@gmail.com>
+ */
+@attribute("__components", {})
+class ComponentController extends Marionette.Object {
 
+    /**
+     * Constructor
+     *
+     * @param args
+     */
     constructor (...args) {
         super(...args);
     }
@@ -36,7 +48,13 @@ class ComponentController extends Object {
         }
 
         let ComponentModule = new component();
-        let Component = document.registerElement(componentName, ComponentModule);
+
+        /**
+         * Create a prototype of our component, otherwise it will throw errors.
+         */
+        let Component = document.registerElement(componentName, {
+            prototype: Object.create(ComponentModule.prototype)
+        });
 
         let elem = new Component;
 
@@ -44,7 +62,7 @@ class ComponentController extends Object {
             elem.properties = properties;
         }
 
-        this.components[componentName] = {
+        this.__components[componentName] = {
             component: elem,
             elementName: componentName
         };
@@ -57,11 +75,16 @@ class ComponentController extends Object {
      * @returns {*}
      */
     getComponent(name) {
-        return this.components[name];
+        return this.__components[name];
     }
 
+    /**
+     * Return the registered components
+     *
+     * @returns {Object} Returns an object of registered components
+     */
     get registeredComponents () {
-        return this.components;
+        return this.__components;
     }
 
 }
