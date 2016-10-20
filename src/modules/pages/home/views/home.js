@@ -56,15 +56,11 @@ class HomeView extends View {
         App.getNavigationContainer().show(Navigation);
         Navigation.setItemAsActive("home");
 
-        this.registerComponent("demo-component", DemoComponent, $componentContainer, {
-            text: "This was registered on render!"
-        });
-
-        this.registerComponent("login-component", LoginComponent, $componentContainer);
+        this.registerComponent("demo-component", DemoComponent, $componentContainer);
+        // this.registerComponent("login-component", LoginComponent, $componentContainer);
 
         /** We can listen to events emitted by the component. **/
-        this.componentChannels["demo-component"].on("attached", component => console.log("Attached", component))
-        this.componentChannels["login-component"].on("attached", component => console.log("Attached", component))
+        // this.componentChannels["login-component"].on("attached", component => console.log("Attached", component));
     }
 
     /**

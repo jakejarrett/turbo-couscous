@@ -35,7 +35,8 @@ class ComponentController extends Object {
             return document.createElement(componentName);
         }
 
-        let Component = document.registerElement(componentName, component);
+        let ComponentModule = new component();
+        let Component = document.registerElement(componentName, ComponentModule);
 
         let elem = new Component;
 

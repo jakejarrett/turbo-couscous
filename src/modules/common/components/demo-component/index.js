@@ -1,54 +1,28 @@
-import Styles from "./style.scss";
-import * as Radio from "backbone.radio";
+import Backbone from "backbone";
+import Styles from "!css?modules!sass!./style.scss";
+import Template from "./index.html";
+import Component from "marionette.component";
 
 /**
  * Entry point for demo-component
  */
-class DemoComponent extends HTMLElement {
+class DemoComponent extends Component {
 
     /**
      * Always call to super in HTMLElement so we inherit the original Element.
      */
     constructor () {
-        super();
-    }
+        const elementName = "hello-world";
+        const renderedTemplate = _.template(Template)();
 
-    /**
-     * When the element is initialized, we'll create the element
-     */
-    createdCallback () {
-        this.innerHTML = `
-            <div>
-                <h1 class="component__demo-component">
-                    Demo component!
-                </h1>
-            </div>
-        `;
-    }
-
-    attachedCallback() {
-        this.querySelector('.component__demo-component').innerHTML = this.textValue != null ? this.textValue : this.dataset['text'];
-        Radio.channel("components:demo-component").trigger("attached", this);
-    }
-
-    attributeChangedCallback(attrName, oldValue, newValue) {
-        Radio.channel("components:demo-component").trigger("attributeChanged", {
-            attributeName: attrName,
-            previousAttribute: oldValue,
-            newAttribute: newValue
+        super({
+            elementName: elementName,
+            element: renderedTemplate,
+            stylesheet: Styles
         });
-    }
 
-    detachedCallback () {
-        Radio.channel("components:demo-component").trigger("detached");
-    }
+        return this.element;
 
-    set properties(prop) {
-        this.textValue = prop.text;
-    }
-
-    get text() {
-        return this.textValue;
     }
 
 }
