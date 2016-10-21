@@ -47,7 +47,7 @@ class ComponentController extends Marionette.Object {
             return document.createElement(componentName);
         }
 
-        let ComponentModule = new component();
+        let ComponentModule = new component(componentName);
 
         /**
          * Create a prototype of our component, otherwise it will throw errors.
