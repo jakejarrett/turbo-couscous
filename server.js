@@ -197,7 +197,7 @@ if (!helpers.isProduction()) {
      */
     var server = http.createServer(app);
     server.on("upgrade", (req, socket, head) => proxy.ws(req, socket, head));
-    server.listen(3000, _ => console.log("Server running on port 3000"));
+    server.listen(3000, "0.0.0.0", 511, _ => console.log("Server running on port 3000"));
 
 } else {
 
@@ -217,7 +217,7 @@ if (!helpers.isProduction()) {
     https.createServer({
         key: privateKey,
         cert: certificate
-    }, app).listen(process.env.PORT, _ => {
+    }, app).listen(process.env.PORT, "0.0.0.0", 511, _ => {
         console.log(`Server running on port ${process.env.PORT}`)
     });
 
