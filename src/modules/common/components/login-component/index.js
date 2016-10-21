@@ -1,4 +1,4 @@
-import Component from "marionette.component";
+import { Component, on } from "marionette.component";
 import Template from "./index.html";
 import * as Styles from "!css?modules!sass!./style.scss";
 
@@ -10,8 +10,7 @@ class LoginComponent extends Component {
     /**
      * Setup our component.
      */
-    constructor () {
-        const elementName = "hello-world";
+    constructor (elementName) {
         const renderedTemplate = _.template(Template)();
 
         super({
@@ -21,6 +20,17 @@ class LoginComponent extends Component {
         });
 
         return this.element;
+    }
+
+    /**
+     * When the user submits the form.
+     *
+     * @param event {Event} The submit event.
+     */
+    @on("submit")
+    onFormSubmit (event) {
+        event.preventDefault();
+        console.log(event);
     }
 
 }

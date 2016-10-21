@@ -1,7 +1,6 @@
 import Styles from "!css?modules!sass!./style.scss";
 import Template from "./index.html";
-import {on} from "../controllers/decorators";
-import Component from "marionette.component";
+import { Component, on } from "marionette.component";
 
 /**
  * Entry point for demo-component
@@ -23,6 +22,11 @@ class DemoComponent extends Component {
         return this.element;
     }
 
+    /**
+     * When the user clicks the element, console log "hello" and the click event.
+     *
+     * @param event {Event} The click event.
+     */
     @on("click")
     onUserClick (event) {
         console.log("hello", event);
