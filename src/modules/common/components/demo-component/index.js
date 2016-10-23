@@ -13,11 +13,7 @@ class DemoComponent extends Component {
     constructor (elementName) {
         const renderedTemplate = _.template(Template)();
 
-        super({
-            elementName: elementName,
-            element: renderedTemplate,
-            stylesheet: Styles
-        });
+        super(elementName, renderedTemplate, Styles);
 
         return this.element;
     }
