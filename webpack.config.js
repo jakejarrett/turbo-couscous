@@ -12,6 +12,7 @@ var config = {
     devtool: "source-map",
 
     entry: [
+        "babel-polyfill",
         "webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr",
         path.resolve(srcPath, "main.js")
     ],
