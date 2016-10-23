@@ -12,6 +12,7 @@ var config = {
     devtool: "source-map",
 
     entry: [
+        "babel-polyfill",
         "webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr",
         path.resolve(srcPath, "main.js")
     ],
@@ -37,10 +38,18 @@ var config = {
                 loader: "babel",
                 query: {
                     plugins: [
+                        "transform-runtime",
                         "transform-decorators-legacy",
                         "syntax-decorators",
                         "transform-decorators",
-                        "transform-function-bind"
+                        "transform-function-bind",
+                        ["transform-es2015-arrow-functions", { "spec": true }],
+                        "transform-es2015-shorthand-properties",
+                        "transform-es2015-spread",
+                        "transform-es2015-parameters",
+                        "transform-es2015-block-scoping",
+                        "transform-es2015-template-literals",
+                        "transform-es2015-classes"
                     ],
                     presets: ["es2016"]
                 },
