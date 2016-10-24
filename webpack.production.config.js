@@ -13,6 +13,7 @@ var config = {
     devtool: "source-map",
 
     entry: [
+        "babel-polyfill",
         path.resolve(srcPath, "main.js")
     ],
 
@@ -23,18 +24,32 @@ var config = {
     },
 
     module: {
-        preLoaders: [
+
+        rules: [
             {
+                enforce: "pre",
                 test: /\.json$/,
                 loader: "json"
-            }
-        ],
-        loaders: [
+            },
             {
                 /** Compiles ES6 to ES5 **/
                 test: /\.js$/,
                 loader: "babel",
                 query: {
+                    plugins: [
+                        "transform-runtime",
+                        "transform-decorators-legacy",
+                        "syntax-decorators",
+                        "transform-decorators",
+                        "transform-function-bind",
+                        ["transform-es2015-arrow-functions", { "spec": true }],
+                        "transform-es2015-shorthand-properties",
+                        "transform-es2015-spread",
+                        "transform-es2015-parameters",
+                        "transform-es2015-block-scoping",
+                        "transform-es2015-template-literals",
+                        "transform-es2015-classes"
+                    ],
                     presets: ["es2016"]
                 },
                 exclude: [nodeModulesPath]
@@ -56,16 +71,18 @@ var config = {
     },
 
     plugins: [
+        new Webpack.optimize.DedupePlugin(),
         new Webpack.optimize.UglifyJsPlugin({minimize: true}),
+        new Webpack.LoaderOptionsPlugin({
+            postcss: function() {
+                return [autoprefixer, precss];
+            }
+        }),
         new ExtractTextPlugin({
             filename: "../assets/css/[name].min.css",
             allChunks: true
         })
     ],
-
-    postcss: function() {
-        return [autoprefixer, precss];
-    },
 
     resolve: {
         alias: {

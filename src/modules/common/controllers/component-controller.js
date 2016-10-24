@@ -1,5 +1,4 @@
 import Marionette from "marionette";
-import "webcomponents.js/webcomponents.min";
 import {attribute} from "./decorators";
 
 /**
