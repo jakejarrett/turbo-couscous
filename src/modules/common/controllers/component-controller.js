@@ -60,7 +60,7 @@ class ComponentController extends Marionette.Object {
         let elem = new Component;
 
         if(!(CustomElements.useNative)) {
-            WebComponents.ShadowCSS.shimStyling(elem.shadow, `${componentName}`);
+            WebComponents.ShadowCSS.shimStyling(elem.shadowRoot, `${componentName}`);
         }
 
         if(undefined !== properties) {
