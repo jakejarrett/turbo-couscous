@@ -1,0 +1,88 @@
+{
+  "_args": [
+    [
+      "webcomponents.js@^0.7.22",
+      "C:\\Users\\NewPC\\dev\\turbo-couscous"
+    ]
+  ],
+  "_from": "webcomponents.js@>=0.7.22 <0.8.0",
+  "_id": "webcomponents.js@0.7.22",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/webcomponents.js",
+  "_nodeVersion": "5.11.0",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/webcomponents.js-0.7.22.tgz_1461364919890_0.49159980029799044"
+  },
+  "_npmUser": {
+    "email": "dfreedm2@gmail.com",
+    "name": "azakus"
+  },
+  "_npmVersion": "3.8.6",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "webcomponents.js",
+    "raw": "webcomponents.js@^0.7.22",
+    "rawSpec": "^0.7.22",
+    "scope": null,
+    "spec": ">=0.7.22 <0.8.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/webcomponents.js/-/webcomponents.js-0.7.22.tgz",
+  "_shasum": "107b7b3fd30161100e8e85e400c32bed1bf29fea",
+  "_shrinkwrap": null,
+  "_spec": "webcomponents.js@^0.7.22",
+  "_where": "C:\\Users\\NewPC\\dev\\turbo-couscous",
+  "author": {
+    "name": "The Polymer Authors"
+  },
+  "bugs": {
+    "url": "https://github.com/webcomponents/webcomponentsjs/issues"
+  },
+  "dependencies": {},
+  "description": "webcomponents.js",
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "gulp-audit": "^1.0.0",
+    "gulp-concat": "^2.4.1",
+    "gulp-header": "^1.1.1",
+    "gulp-uglify": "^1.0.1",
+    "run-sequence": "^1.0.1",
+    "web-component-tester": "^4.0.1"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "dist": {
+    "shasum": "107b7b3fd30161100e8e85e400c32bed1bf29fea",
+    "tarball": "https://registry.npmjs.org/webcomponents.js/-/webcomponents.js-0.7.22.tgz"
+  },
+  "gitHead": "50f9751f8e638301603aebb33ba9f1e90d2b0d32",
+  "homepage": "http://webcomponents.org",
+  "license": "BSD-3-Clause",
+  "main": "webcomponents.js",
+  "maintainers": [
+    {
+      "name": "addyosmani",
+      "email": "addyosmani@gmail.com"
+    },
+    {
+      "name": "azakus",
+      "email": "dfreedm2@gmail.com"
+    }
+  ],
+  "name": "webcomponents.js",
+  "optionalDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webcomponents/webcomponentsjs.git"
+  },
+  "scripts": {
+    "test": "wct"
+  },
+  "version": "0.7.22"
+}
