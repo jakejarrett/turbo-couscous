@@ -70,7 +70,6 @@ var config = {
 
     plugins: [
         new Webpack.HotModuleReplacementPlugin(),
-        new Webpack.optimize.DedupePlugin(),
         new Webpack.LoaderOptionsPlugin({
             postcss: function() {
                 return [autoprefixer, precss];
