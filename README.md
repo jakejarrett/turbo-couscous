@@ -1,8 +1,11 @@
-# Turbo Couscous	
+# Turbo Couscous
+
+A Marionette 3.1 & ES7 Starter pack. <sup>(Batteries not included)</sup>
+
 * [Turbo Couscous](#turbo-couscous)
   * [Tech](#tech)
+  * [Getting Started](#getting-started)
   * [Usage](#usage)
-     * [Getting Started](#getting-started)
      * [Importing dependencies](#importing-dependencies)
      * [Classes / Instantiating a new view (Uses decorators)](#classes--instantiating-a-new-view-uses-decorators)
      * [Components](#components)
@@ -27,18 +30,14 @@
   * We only have to write spec compliant CSS in SCSS & PostCSS will help out with the vendor implementations.
 * Marionette 3.1.0 (Main difference is, You interface with Marionette.View instead of ItemView/CollectionView/CompositeView)
   * Marionette 3.1 provides a bunch of performance improvements over 3.0
-* Webcomponents
-  * These allow re-usable components (That are encapsulated via shadow dom)
+* Web Components
+  * Custom Elements [Spec](https://html.spec.whatwg.org/multipage/scripting.html#custom-elements)
+  * Shadow Dom (Marionette.Component)
 * Bootstrap 4
   * This allows us to utilize a fair amount of modern features in bootstrap without having to write layer ontop of layer for partial improvements around different pages
 
 
-
-## Usage
-
-Usage is fairly straight forward, It's using ES2015 **classes** syntax, which provides us a with a nicer interface.
-
-### Getting Started
+## Getting Started
 
 You can simply run **./bootstrap** from any **bash** (incl cygwin) terminal to bootstrap your install for you (Will install global dependencies etc). otherwise, Here is the set of commands required.
 
@@ -54,6 +53,11 @@ yarn
 **Why Yarn?**
 
 Yarn allows the installs to be **reproducible** removing any issues with initial installs.
+
+
+## Usage
+
+Usage is fairly straight forward, It's using ES2015 **classes** syntax, which provides us a with a nicer interface.
 
 ### Importing dependencies
 
@@ -84,11 +88,11 @@ class HomeView extends View {
   	 * Constructor
   	 */
     constructor () {
-        super();
+        super(); // Required
     }
 
     /**
-     * On render, we want to add the navigation
+     * Do something on render
      *
      * @protected
      */
@@ -115,12 +119,12 @@ class HomeView extends View {
    * Constructor
    */
   constructor () {
-    super();
+    super(); // Required
   }
   
   // Register component at render
   onRender () {
-    this.registerComponent("demo-component", DemoComponent, $componentContainer);
+    this.registerComponent("demo-component", DemoComponent, this.$el.find("#container"));
   }
   
   /**
@@ -166,7 +170,7 @@ class DemoComponent extends Component {
   constructor (elementName) {
     const renderedTemplate = _.template(Template)();
     super(elementName, renderedTemplate, Styles);
-    return this.element; // We return the element for the registration method.
+    return this.element; // We return the element for the registration method
   }
 
   /**
@@ -190,20 +194,20 @@ export default DemoComponent;
 
 ### Eventing
 
-Events **should** be handled via Backbone.Radio, to allows us to design a decoupled event system where our encapsulated components can communicate with the View layer, but are not directly dependent on the view layer being there.
+Events **should** be handled via Backbone.Radio, to allows us to design a decoupled event system where our encapsulated components can communicate with the View layer, but are not directly dependent on each other.
 
 ## The server
 We use express & webpack as the frontend server.
 
 ### Starting the server
 
-On your system's default terminal (cygwin isn't supported), run **npm start** and it will start a server with webpack dashboard.
+On your system's default terminal (cygwin isn't supported - see below), run **npm start** and it will start a server with webpack dashboard.
 
 Webpack dashboard is primarily used as it will show you an overview of the built files & dependencies (and **their** dependencies.) and how much percentage of our app those dependencies take up.
 
 #### Using cygwin
 
-Run **node server** and it will build webpack but without the dashboard
+Run **node server** and it will build webpack but without the dashboard.
 
 
 
@@ -219,49 +223,22 @@ webpack --config webpack.production.config.js
 
 #### Serving production grade product
 
+<sup>**SSL Certificates Required** - You need to provide your own SSL certificates to run the production server.
+If you wish not to run SSL, you can alter the **server.js** file to not use https.</sup>
+
 You can simply run **./production** in the command prompt to run the server as if it were production.
 
-The contents of **production.sh**
+Alternatively, you can run these commands.
 
 ```bash
-#!/usr/bin/env bash
-
-# This is mainly for testing purposes, This will only run node under production under the context of this
-# bash script.
-function setProductionEnvironments {
-    # Set environment as production
-    echo "export NODE_ENV=production";
-    export NODE_ENV=production
-
-    # Set port as 3009
-    echo "export PORT=3009"
-    export PORT=3009
-}
-
-# Build webpack
-function buildWebpackProduction {
-    echo "Building webpack production config";
-
-    echo "webpack --config webpack.production.config.js";
-    webpack --config webpack.production.config.js
-}
-
-# Serve Webpack
-function serveWebpackProduction {
-    echo "Starting production server";
-
-    echo "npm start";
-    npm start
-}
-
-setProductionEnvironments
-buildWebpackProduction
-serveWebpackProduction
+export NODE_ENV=production
+export PORT=3009
+webpack --config webpack.production.config.js
+npm start
 ```
 
 ### Server side rendering
 
 The current implementation of the express server supports server side rendering (This will probably be altered to use express routes instead of the regex nightmare that it is at the moment.)
 
-
-
+:scream_cat:
