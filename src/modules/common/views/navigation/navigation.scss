@@ -1,9 +1,12 @@
+// Import bootstrap sass variables
+@import "~bootstrap/scss/_variables";
+
 $base: #CCCCCC;
 $foreground: #FFFFFF;
 
 .navbar {
   border-radius: 0;
-  background: #333;
+  background: $gray-dark;
   color: $foreground;
 
   .navbar-nav  {

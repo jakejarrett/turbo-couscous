@@ -68,7 +68,8 @@ class ComponentController extends Marionette.Object {
 
         this.__components[componentName] = {
             component: elem,
-            elementName: componentName
+            elementName: componentName,
+            radioChannel: elem.radio
         };
     }
 

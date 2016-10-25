@@ -1,3 +1,4 @@
+import App from "app/app";
 import { Component, on } from "marionette.component";
 import Template from "./index.html";
 import * as Styles from "!css?modules!sass!./style.scss";
@@ -12,8 +13,9 @@ class LoginComponent extends Component {
      */
     constructor (elementName) {
         const renderedTemplate = _.template(Template)();
+        const state = new Backbone.Model();
 
-        super(elementName, renderedTemplate, Styles);
+        super(elementName, renderedTemplate, Styles, state);
 
         return this.element;
     }
@@ -26,7 +28,17 @@ class LoginComponent extends Component {
     @on("submit")
     onFormSubmit (event) {
         event.preventDefault();
-        console.log(event);
+
+        console.log(event.srcElement.shadowRoot.querySelectorAll("input"));
+        this.setState("loggedIn", true);
+    }
+
+    setState (attribute, state) {
+        this.state.set(attribute, state);
+        this.radioChannel.trigger("stateChange", {
+            attribute: attribute,
+            state: state
+        });
     }
 
 }

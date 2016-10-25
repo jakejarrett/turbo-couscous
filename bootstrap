@@ -11,7 +11,7 @@ function setupGlobals {
     gem install sass
 
     echo "npm install -g webpack babel-cli webpack-dev-server";
-    npm install -g webpack babel-cli webpack-dev-server
+    npm install -g webpack babel-cli webpack-dev-server yarn
 }
 
 # Setup local dependencies

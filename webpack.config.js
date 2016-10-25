@@ -1,8 +1,13 @@
+/** Dependencies **/
 var Webpack = require("webpack");
 var path = require("path");
+
+/** Paths **/
 var srcPath = path.resolve(__dirname, "src");
 var nodeModulesPath = path.resolve(__dirname, "node_modules");
-var buildPath = path.resolve(__dirname, "public", "build");
+var buildPath = path.resolve(__dirname, "public", "assets/js");
+
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var autoprefixer = require("autoprefixer");
 var precss = require("precss");
@@ -20,7 +25,7 @@ var config = {
     output: {
         path: buildPath,
         filename: "[name].js",
-        publicPath: "/build/"
+        publicPath: "/assets/js/"
     },
 
     module: {
@@ -43,7 +48,7 @@ var config = {
                         "syntax-decorators",
                         "transform-decorators",
                         "transform-function-bind",
-                        ["transform-es2015-arrow-functions", { "spec": true }],
+                        ["transform-es2015-arrow-functions", { "spec": false }],
                         "transform-es2015-shorthand-properties",
                         "transform-es2015-spread",
                         "transform-es2015-parameters",
@@ -70,6 +75,9 @@ var config = {
 
     plugins: [
         new Webpack.HotModuleReplacementPlugin(),
+        new ExtractTextPlugin({
+            filename: path.resolve(buildPath, "../css/[name].min.css")
+        }),
         new Webpack.LoaderOptionsPlugin({
             postcss: function() {
                 return [autoprefixer, precss];
