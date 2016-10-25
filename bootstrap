@@ -10,7 +10,7 @@ function setupGlobals {
     echo "gem install sass";
     gem install sass
 
-    echo "npm install -g webpack babel-cli webpack-dev-server";
+    echo "npm install -g webpack babel-cli webpack-dev-server yarn";
     npm install -g webpack babel-cli webpack-dev-server yarn
 }
 
@@ -18,8 +18,8 @@ function setupGlobals {
 function setupLocals {
     echo "Installing local dependencies";
 
-    echo "npm install";
-    npm install
+    echo "yarn";
+    yarn
 }
 
 setupGlobals
