@@ -40,6 +40,8 @@ class ComponentController extends Marionette.Object {
      * @public
      */
     register (componentName, component, properties) {
+        let ComponentModule = new component(componentName, properties);
+
         /**
          * If it's registered already, return the registered one
          */
@@ -47,16 +49,20 @@ class ComponentController extends Marionette.Object {
             return document.createElement(componentName);
         }
 
-        let ComponentModule = new component(componentName);
+        console.log(ComponentModule.element.prototype);
+
+        let tempObj = Object.create(ComponentModule.element.prototype);
 
         /**
          * Create a prototype of our component, otherwise it will throw errors.
          */
         let Component = document.registerElement(componentName, {
-            prototype: Object.create(ComponentModule.prototype)
+            prototype: tempObj
         });
 
-        let elem = new Component;
+        const elem = new Component;
+
+        // ComponentModule.element = tempObj;
 
         if(!(CustomElements.useNative)) {
             WebComponents.ShadowCSS.shimStyling(elem.shadowRoot, `${componentName}`);
@@ -68,8 +74,9 @@ class ComponentController extends Marionette.Object {
 
         this.__components[componentName] = {
             component: elem,
+            componentModule: ComponentModule,
             elementName: componentName,
-            radioChannel: elem.radio
+            radioChannel: ComponentModule.radioChannel
         };
     }
 

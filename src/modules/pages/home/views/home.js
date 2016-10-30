@@ -61,9 +61,10 @@ class HomeView extends View {
     }
 
     setupComponentEventListeners () {
+        console.log(this.componentChannels["login-component"]);
         /** We can listen to events emitted by the component. **/
         this.componentChannels["login-component"].on("stateChange", stateChange => {
-            console.log(`New state ${stateChange}`)
+            console.log(stateChange)
         });
     }
 
@@ -82,7 +83,11 @@ class HomeView extends View {
         let componentObject = Component.getComponent(componentName);
 
         /** Store references to the component & radio channels **/
-        this.components[componentObject.elementName] = componentObject.component;
+        this.components[componentObject.elementName] = {
+            element: componentObject.component,
+            module: componentObject.componentModule
+        };
+
         this.componentChannels[componentObject.elementName] = componentObject.radioChannel || {};
 
         el.append(componentObject.component);

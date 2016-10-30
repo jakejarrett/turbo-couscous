@@ -2451,7 +2451,7 @@ map-obj@^1.0.0, map-obj@^1.0.1:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
 
 "marionette.component@git+https://github.com/jakejarrett/Marionette.Component.git":
-  version "0.1.8"
+  version "0.1.9"
   resolved "git+https://github.com/jakejarrett/Marionette.Component.git#ca9db8a729f3933a386b08e25b72d2655e6983ee"
 
 math-expression-evaluator@^1.2.14:

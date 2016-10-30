@@ -15,7 +15,7 @@ class DemoComponent extends Component {
 
         super(elementName, renderedTemplate, Styles);
 
-        return this.element;
+        return this;
     }
 
     /**

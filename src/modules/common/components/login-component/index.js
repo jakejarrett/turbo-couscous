@@ -17,7 +17,7 @@ class LoginComponent extends Component {
 
         super(elementName, renderedTemplate, Styles, state);
 
-        return this.element;
+        return this;
     }
 
     /**
