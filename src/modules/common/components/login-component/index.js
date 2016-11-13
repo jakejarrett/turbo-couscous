@@ -12,12 +12,18 @@ class LoginComponent extends Component {
      * Setup our component.
      */
     constructor (elementName) {
+        super(elementName);
+
+        this.render(elementName);
+
+        return this;
+    }
+
+    render (elementName) {
         const renderedTemplate = _.template(Template)();
         const state = new Backbone.Model();
 
-        super(elementName, renderedTemplate, Styles, state);
-
-        return this;
+        this.renderComponent(elementName, renderedTemplate, Styles, state);
     }
 
     /**

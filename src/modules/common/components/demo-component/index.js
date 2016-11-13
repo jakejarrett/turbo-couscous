@@ -11,11 +11,21 @@ class DemoComponent extends Component {
      * Setup our component.
      */
     constructor (elementName) {
-        const renderedTemplate = _.template(Template)();
+        super(elementName);
 
-        super(elementName, renderedTemplate, Styles);
+        this.render(elementName);
 
         return this;
+    }
+
+    render (elementName, props) {
+        let data = {
+            properties: props
+        };
+
+        const renderedTemplate = _.template(Template)(data);
+
+        this.renderComponent(elementName, renderedTemplate, Styles);
     }
 
     /**
