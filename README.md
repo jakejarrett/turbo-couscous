@@ -1,6 +1,6 @@
 # Turbo Couscous
 
-A Marionette 3.1 & ES7 Starter pack. <sup>(Batteries not included)</sup>
+A Marionette 3.1 & ES7 Starter pack.
 
 * [Turbo Couscous](#turbo-couscous)
   * [Tech](#tech)
@@ -71,7 +71,7 @@ import {className, template, on} from "modules/common/controllers/decorators"; /
 
 ### Classes / Instantiating a new view (Uses decorators)
 
-This utilizes ES2016 Classes sugar syntax w/ ES2017 **Stage 0** decorators
+This utilizes ES2016 Classes sugar syntax w/ ES2017 **Stage 2** decorators
 
 ```javascript
 /**
@@ -80,10 +80,15 @@ This utilizes ES2016 Classes sugar syntax w/ ES2017 **Stage 0** decorators
  * @module modules/pages/home
  * @exports HomeView
  */
-@className("home") // Same as this.className = "home"
-@template(Template) // Same as this.template = function () { return _.template(Template); }
+@className("home") // Same as; this.className = "home";
+@template(Template) // Same as; this.template = e => _.template(Template);
+/** Or **/
+@attributes({
+    className: "home",
+    template: Template
+})
 class HomeView extends View {
-  	
+
   	/**
   	 * Constructor
   	 */
@@ -110,82 +115,95 @@ Components are inherited from the **Marionette.Component** library
 
 ```javascript
 import App from "app/app";
-import { View } from "marionette";
+import { ComponentView } from "component-view";
 import DemoComponent from "modules/common/components/demo-component";
 
-class HomeView extends View {
-  
+class HomeView extends ComponentView {
+
   /**
    * Constructor
    */
   constructor () {
     super(); // Required
   }
-  
+
   // Register component at render
   onRender () {
-    this.registerComponent("demo-component", DemoComponent, this.$el.find("#container"));
+    // registerComponent is a method of ComponentView
+    this.registerComponent(
+        "demo-component",
+        DemoComponent,
+        this.$el.find("#container")
+    );
   }
-  
-  /**
-  * Register the component.
-  *
-  * @param componentName {String} Name the component will be registered under.
-  * @param component {HTMLElement} The component you're registering.
-  * @param el {jQuery} Container/Element you're putting the component into.
-  * @param properties {Object} Properties you wish to apply to the component.
-  */
-  registerComponent (componentName, component, el, properties) {
-    let Component = App.Compontents;
-    Component.register(componentName, component, properties);
 
-    let componentObject = Component.getComponent(componentName);
-
-    /** Store references to the component & radio channels **/
-    this.components[componentObject.elementName] = componentObject.component;
-    this.componentChannels[componentObject.elementName] = componentObject.radioChannel || {};
-
-    el.append(componentObject.component);
-  }
 }
 ```
 
-**Making a component** (using Marionette.Component)
+**Making a component** (using [Marionette.Component](https://github.com/jakejarrett/Marionette.Component))
 
 ```javascript
-import Styles from "!css?modules!sass!./style.scss";  // Style, we put this inside the shadow dom.
-import Template from "./index.html"; 				  // Template
-import { Component, on } from "marionette.component"; // We import the component interface AND the decorator
+import { Component, on } from "marionette.component";
+import Template from "./index.html";
+// This transforms into <style>:host{/* styling */}</style>
+// You could also use * to css transforms like css-literal-loader
+import Styles from "!css?modules!sass!./style.scss";
 
 /**
  * Entry point for demo-component
  */
 class DemoComponent extends Component {
 
-  /**
-   * Setup our component.
-   *
-   * @param elementName {String} The name the element will be rendered with (Must be hyphen seperated)
-   */
-  constructor (elementName) {
-    const renderedTemplate = _.template(Template)();
-    super(elementName, renderedTemplate, Styles);
-    return this.element; // We return the element for the registration method
-  }
+    /**
+     * Setup our component.
+     */
+    constructor (elementName, props) {
+        /** Initialize component **/
+        super(elementName);
 
-  /**
-   * When the user clicks the element, console log "hello" and the click event.
-   *
-   * @param event {Event} The click event.
-   */
-  @on("click")
-  onUserClick (event) {
-    console.log("hello", event);
-  }
+        // Call render
+        this.render(elementName, props);
+
+        // Return the element
+        return this.element;
+    }
+
+    /**
+     * The render method, we'll define what is being rendered onto the dom here.
+     */
+    render (elementName, props) {
+        /**
+         * Assume that we're pre-filling the elements with this object.
+         */
+        let data = {
+            elements: {
+                input: {
+                    placeholder: props.input.placeholder
+                },
+                textarea: {
+                    value: props.textarea.value
+                }
+            }
+        };
+
+         const renderedTemplate = _.template(Template)(data);
+
+        this.renderComponent(elementName, renderedTemplate, Styles);
+    }
+
+    /**
+     * Custom decorator
+     * This hooks into this.events (Requires transform-decorators)
+     */
+    @on("change input")
+    onInputValueChange (event) {
+        // Log out the new value
+        console.log(event.path[0].value);
+    }
 }
 
 /**
- * Export the Component
+ *  Export the Component
  *
  * @exports DemoComponent
  */
