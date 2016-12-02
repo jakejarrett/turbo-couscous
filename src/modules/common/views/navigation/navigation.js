@@ -1,6 +1,7 @@
 import * as Backbone from "backbone";
 import Marionette, { View } from "marionette";
-import {active, template, on} from "modules/common/controllers/decorators";
+import { template, on } from "marionette-decorators";
+import { active } from "../../controllers/decorators";
 import Template from "./navigation.html";
 import Styles from "./navigation.scss";
 import Router from "app/routes";

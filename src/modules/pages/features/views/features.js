@@ -1,6 +1,6 @@
 import App from "app/app";
 import Marionette, { View } from "marionette";
-import {className, tagName, template, on} from "modules/common/controllers/decorators";
+import {className, tagName, template, on} from "marionette-decorators";
 import NavigationView from "modules/common/views/navigation/navigation";
 import Template from "./features.html";
 import Styles from "./features.scss";

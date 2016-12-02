@@ -1,5 +1,5 @@
 import Marionette from "marionette";
-import {attribute} from "./decorators";
+import { attribute } from "marionette-decorators";
 
 /**
  * Marionette Component controller.

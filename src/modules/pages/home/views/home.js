@@ -1,7 +1,7 @@
 import App from "app/app";
 import { View } from "marionette";
 import NavigationView from "modules/common/views/navigation/navigation";
-import {attribute, className, tagName, template, on} from "modules/common/controllers/decorators";
+import {attribute, className, tagName, template, on} from "marionette-decorators";
 import DemoComponent from "modules/common/components/demo-component";
 import LoginComponent from "modules/common/components/login-component";
 import Template from "./home.html";

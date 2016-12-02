@@ -1,5 +1,5 @@
 import Marionette, { AppRouter } from "marionette";
-import {controller, appRoute} from "modules/common/controllers/decorators";
+import {controller, appRoute} from "marionette-decorators";
 import FeaturesRouterController from "./router-contoller";
 import App from "app/app";
 

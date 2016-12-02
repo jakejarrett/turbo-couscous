@@ -1,5 +1,5 @@
 import Marionette, { AppRouter } from "marionette";
-import {controller, appRoute} from "modules/common/controllers/decorators";
+import { attribute, controller, appRoute } from "marionette-decorators";
 import HomeRouterController from "./router-contoller";
 import App from "app/app";
 
@@ -13,10 +13,11 @@ class HomeRouter extends AppRouter {
 
     constructor (...args) {
         super(args);
+        console.log(this);
     }
 
     initialize () {
-        var that = this;
+        const that = this;
 
         if(module.hot) {
             module.hot.accept("../views/home", () => {
