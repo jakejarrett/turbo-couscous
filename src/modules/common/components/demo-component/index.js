@@ -1,6 +1,6 @@
 import Styles from "!css?modules!sass!./style.scss";
 import Template from "./index.html";
-import { Component, on } from "marionette.component";
+import { Component, on } from "@jakejarrett/marionette-component";
 
 /**
  * Entry point for demo-component
@@ -10,8 +10,8 @@ class DemoComponent extends Component {
     /**
      * Setup our component.
      */
-    constructor (elementName) {
-        super(elementName);
+    constructor (elementName, properties, localName) {
+        super(elementName, localName);
 
         this.render(elementName);
 

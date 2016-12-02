@@ -17,6 +17,7 @@
   "author": "Jake Jarrett <jakeryanjarrett@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@jakejarrett/marionette-component": "^0.2.6",
     "autoprefixer": "^6.4.0",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",

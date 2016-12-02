@@ -36,33 +36,26 @@ class ComponentController extends Marionette.Object {
      * @param componentName {String} Name of the element you're registering.
      * @param component {HTMLElement} The element you're constructing.
      * @param properties {Object} The properties you wish to set to the element.
+     * @param localCompName {String} The unique identifier inside the app for the element.
      * @returns {Element}
      * @public
      */
-    register (componentName, component, properties) {
-        let ComponentModule = new component(componentName, properties);
+    register (componentName, component, properties, localCompName) {
+        let ComponentModule = new component(componentName, properties, localCompName);
 
         /**
          * If it's registered already, return the registered one
          */
-        if(this.isRegistered(componentName)) {
-            return document.createElement(componentName);
+        if(!this.isRegistered(componentName)) {
+            document.registerElement(componentName, {
+                prototype: Object.create(ComponentModule.element.prototype)
+            });
         }
 
-        console.log(ComponentModule.element.prototype);
+        let elem = document.createElement(componentName);
+        elem.setAttribute("data-id", localCompName);
 
-        let tempObj = Object.create(ComponentModule.element.prototype);
-
-        /**
-         * Create a prototype of our component, otherwise it will throw errors.
-         */
-        let Component = document.registerElement(componentName, {
-            prototype: tempObj
-        });
-
-        const elem = new Component;
-
-        // ComponentModule.element = tempObj;
+        ComponentModule._element = elem;
 
         if(!(CustomElements.useNative)) {
             WebComponents.ShadowCSS.shimStyling(elem.shadowRoot, `${componentName}`);
@@ -72,12 +65,14 @@ class ComponentController extends Marionette.Object {
             elem.properties = properties;
         }
 
-        this.__components[componentName] = {
+        this.__components[localCompName] = {
             component: elem,
             componentModule: ComponentModule,
             elementName: componentName,
             radioChannel: ComponentModule.radioChannel
         };
+
+        return elem;
     }
 
     /**

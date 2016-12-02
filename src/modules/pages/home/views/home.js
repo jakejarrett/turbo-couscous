@@ -1,5 +1,5 @@
 import App from "app/app";
-import { View } from "marionette";
+import { View } from "@jakejarrett/marionette-component";
 import NavigationView from "modules/common/views/navigation/navigation";
 import {attribute, className, tagName, template, on} from "marionette-decorators";
 import DemoComponent from "modules/common/components/demo-component";
@@ -13,11 +13,11 @@ import "./home.scss";
  * @module modules/pages/home
  * @exports HomeView
  */
-@className("home")
 @template(Template)
-@attribute("components", {})
-@attribute("componentChannels", {})
 class HomeView extends View {
+
+    /** Initial Properties **/
+    className = "home";
 
     constructor () {
         super();
@@ -28,14 +28,17 @@ class HomeView extends View {
      * (This won't preserve state)
      */
     initialize () {
-        var that = this;
+        const that = this;
+
         if (module.hot) {
             /** Require the template & re-render :) **/
             module.hot.accept("./home.html", (res) => {
                 that.$el.find("#content-container").html(_.template(require("./home.html")));
             });
 
-            module.hot.accept("modules/common/components/login-component", elem => that.components["login-component"].updateElement());
+            module.hot.accept("modules/common/components/login-component", elem => {
+                that.getComponent("login-component").component.updateElement();
+            });
         }
     }
 
@@ -54,44 +57,25 @@ class HomeView extends View {
     }
 
     setupComponents () {
-        let $componentContainer = this.$el.find("#component-container");
+        let $componentContainer = this.el.querySelector("#component-container");
 
-        this.registerComponent("demo-component", DemoComponent, $componentContainer);
-        this.registerComponent("login-component", LoginComponent, $componentContainer);
+        this.registerComponent(App.Compontents, "demo-component", DemoComponent, $componentContainer);
+        this.registerComponent(App.Compontents, "login-component", LoginComponent, $componentContainer);
     }
 
     setupComponentEventListeners () {
-        console.log(this.componentChannels["login-component"]);
+        const loginComponent = this.getComponent("login-component").radioChannel;
         /** We can listen to events emitted by the component. **/
-        this.componentChannels["login-component"].on("stateChange", stateChange => {
+        loginComponent.on("stateChange", stateChange => {
             console.log(stateChange)
         });
     }
 
-    /**
-     * Register the component.
-     *
-     * @param componentName {String} Name the component will be registered under.
-     * @param component {HTMLElement} The component you're registering.
-     * @param el {jQuery} Container/Element you're putting the component into.
-     * @param properties {Object} Properties you wish to apply to the component.
-     */
-    registerComponent (componentName, component, el, properties) {
-        let Component = App.Compontents;
-        Component.register(componentName, component, properties);
-
-        let componentObject = Component.getComponent(componentName);
-
-        /** Store references to the component & radio channels **/
-        this.components[componentObject.elementName] = {
-            element: componentObject.component,
-            module: componentObject.componentModule
-        };
-
-        this.componentChannels[componentObject.elementName] = componentObject.radioChannel || {};
-
-        el.append(componentObject.component);
+    onBeforeDestroy () {
+        this.getComponent("login-component").radioChannel.off("stateChange");
+        this.clearComponents();
     }
+
 }
 
 export default HomeView;

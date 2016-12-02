@@ -54,6 +54,7 @@ var config = {
                         "transform-es2015-parameters",
                         "transform-es2015-block-scoping",
                         "transform-es2015-template-literals",
+                        "transform-class-properties",
                         "transform-es2015-classes"
                     ],
                     presets: ["es2016"]
