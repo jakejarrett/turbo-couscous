@@ -34,8 +34,17 @@ class LoginComponent extends Component {
     @on("submit")
     onFormSubmit (event) {
         event.preventDefault();
+        const supportsSrcElement = undefined !== event.srcElement;
+        const target = event.target;
+        let elem = target.querySelectorAll("input");
 
-        console.log(event.srcElement.shadowRoot.querySelectorAll("input"));
+        /** If shadowRoot is present, we'll get the shadowRoot, otherwise it doesn't support shadowRoot **/
+        if(target.shadowRoot) {
+            elem = target.shadowRoot.querySelectorAll("input");
+        }
+
+        _.each(elem, (element, index) => console.log(element.value));
+
         this.setState("loggedIn", true);
     }
 

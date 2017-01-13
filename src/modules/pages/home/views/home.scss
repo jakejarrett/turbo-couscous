@@ -1,15 +1,14 @@
 // Import bootstrap sass variables
 @import "~bootstrap/scss/_variables";
 
-.home {
-  margin-top: 10px;
+/** Styles **/
+.jumbotron {
+  margin-top: 20px;
+  background: rgba(0, 0, 0, 0.015);
+  color: $gray-dark;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 
-  /** Styles **/
-  .jumbotron {
-    background: $gray-dark;
-    color: white;
-
-    /** Autoprefixer will append prefixes for us to support ie. **/
-    display: flex;
-  }
+  /** Autoprefixer will append prefixes for us to support ie. **/
+  display: flex;
+  justify-content:center;
 }
