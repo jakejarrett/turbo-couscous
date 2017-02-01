@@ -62,10 +62,7 @@ var config = {
             {
                 /** Compiles SASS and then Import the Compiled CSS **/
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    fallbackLoader: "style?singleton",
-                    loader: "!css-loader?locals&sourceMap!postcss!sass?sourceMap"
-                })
+                loader: ["style", "css?modules&importLoaders=1&localIdentName", "postcss", "sass?sourceMap"]
             }
         ]
     },
