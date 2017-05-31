@@ -34,13 +34,13 @@ var config = {
             {
                 enforce: "pre",
                 test: /\.json$/,
-                loader: "json"
+                loader: "json-loader"
             },
 
             {
                 /** Compiles ES6 to ES5 **/
                 test: /\.js$/,
-                loader: "babel",
+                loader: "babel-loader",
                 query: {
                     plugins: [
                         "transform-runtime",
@@ -64,12 +64,12 @@ var config = {
             {
                 /** Support importing .html templates **/
                 test: /\.html$/,
-                loader: "html"
+                loader: "html-loader"
             },
             {
                 /** Compiles SASS and then Import the Compiled CSS **/
                 test: /\.scss$/,
-                loader: ["style", "css?modules&importLoaders=1&localIdentName", "postcss", "sass?sourceMap"]
+                loader: ["style-loader", "css-loader?modules&importLoaders=1&localIdentName", "postcss-loader", "sass-loader?sourceMap"]
             }
         ]
     },

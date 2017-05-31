@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% for (var chunk in htmlWebpackPlugin.files.css) { %>
+            <link rel="preload" href="<%= htmlWebpackPlugin.files.css[chunk] %>"  as="style">
+        <% } %>
+        <% for (var _chunk in htmlWebpackPlugin.files.chunks) { %>
+            <link rel="preload" href="<%= htmlWebpackPlugin.files.chunks[_chunk].entry %>" as="script">
+        <% } %>
+
+        <!-- Required meta tags always come first -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <!-- Mobile theme color meta -->
+        <meta name="theme-color" content="#2fba89">
+
+        <!-- Mobile Manifest file -->
+        <link rel="manifest" href="/manifest.json">
+
+        <meta charset="UTF-8">
+        <title>Turbo Couscous</title>
+
+        <!-- Favico -->
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    </head>
+    <body>
+
+        <main id="app-layout">
+            <!-- Navigation -->
+            <nav id="navigation" class="navbar navbar-light bg-faded">
+                <div>
+                    <a class="navbar-brand" href="/">
+                        Turbo couscous
+                    </a>
+
+                    <ul class="nav navbar-nav">
+
+                        <li class="nav-item" id="home">
+                            <a class="nav-link" href="/">
+                                Home
+                            </a>
+                        </li>
+
+                        <li class="nav-item" id="features">
+                            <a class="nav-link" href="/features/">
+                                Features
+                            </a>
+                        </li>
+
+                        <li class="nav-item" id="pricing">
+                            <a class="nav-link" href="#">
+                                Pricing
+                            </a>
+                        </li>
+
+                        <li class="nav-item" id="about">
+                            <a class="nav-link" href="#">
+                                About
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </nav>
+
+            <!-- Content-->
+            <div id="app-main"></div>
+        </main>
+
+        <div class="loader">
+            <svg viewBox="0 0 32 32" width="32" height="32">
+                <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
+            </svg>
+        </div>
+
+        <!-- Add all your dependencies here so we pull them in dynamically -->
+        <script defer>
+            window.addEventListener("load", function load() {
+                window.removeEventListener("load", load, false);
+                var document = window.document;
+
+                var bootstrap = document.createElement("link");
+                bootstrap.href= "//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css";
+                bootstrap.rel = "stylesheet";
+                bootstrap.setAttribute("crossorigin", "anonymous");
+                bootstrap.setAttribute("integrity", "sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY");
+
+                document.head.appendChild(bootstrap);
+            }, false);
+        </script>
+    </body>
+</html>

@@ -1,6 +1,6 @@
 import Marionette, { AppRouter } from "marionette";
 import {controller, appRoute} from "marionette-decorators";
-import FeaturesRouterController from "./router-contoller";
+import FeaturesRouterController from "./router-controller";
 import App from "app/app";
 
 /**
@@ -22,7 +22,7 @@ class FeaturesRoute extends AppRouter {
      */
     @appRoute("features(/)")
     startFeaturesRoute () {
-        System.import("../views/features").then(View => App.getContentContainer().show(new View.default()));
+        System.import("../views/features").then(View => App.contentRegion.show(new View.default()));
     }
 
 }

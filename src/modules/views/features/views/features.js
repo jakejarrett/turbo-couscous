@@ -1,7 +1,7 @@
 import App from "app/app";
-import Marionette, { View } from "marionette";
-import {className, tagName, template, on} from "marionette-decorators";
-import NavigationView from "modules/common/views/navigation/navigation";
+import { View } from "marionette";
+import { className, template } from "marionette-decorators";
+import NavigationView from "modules/components/navigation";
 import Template from "./features.html";
 import Styles from "./features.scss";
 
@@ -33,8 +33,8 @@ class FeaturesView extends View {
      * @protected
      */
     onRender () {
-        var Navigation =  new NavigationView();
-        App.getNavigationContainer().show(Navigation);
+        const Navigation =  new NavigationView();
+        App.navigationRegion.show(Navigation);
         Navigation.setItemAsActive("features");
     }
 }

@@ -1,6 +1,6 @@
 import Marionette, { AppRouter } from "marionette";
 import { attribute, controller, appRoute } from "marionette-decorators";
-import HomeRouterController from "./router-contoller";
+import HomeRouterController from "./router-controller";
 import App from "app/app";
 
 /**
@@ -21,7 +21,7 @@ class HomeRouter extends AppRouter {
 
         if(module.hot) {
             module.hot.accept("../views/home", () => {
-                System.import("../views/home").then(View => App.getContentContainer().show(new View.default()));
+                System.import("../views/home").then(View => App.contentRegion.show(new View.default()));
             });
         }
     }
@@ -33,7 +33,7 @@ class HomeRouter extends AppRouter {
      */
     @appRoute("(/)")
     startIndexRoute () {
-        System.import("../views/home").then(View => App.getContentContainer().show(new View.default()));
+        System.import("../views/home").then(View => App.contentRegion.show(new View.default()));
     }
 
 }

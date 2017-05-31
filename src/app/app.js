@@ -1,17 +1,16 @@
+import { attribute } from "marionette-decorators";
 import $ from "jquery";
-import _ from "lodash";
 import Radio from "backbone.radio";
 import Backbone from "backbone";
-import Marionette, { Application } from "marionette";
+import { Application } from "marionette";
 import LayoutView from "./layout_view";
-import ComponentController from "modules/common/controllers/component-controller";
+import TurboHistory from "../overrides/router";
 import Router from "./routes";
 
 /**
  * Setup radio channels
  */
-let globalChannel = Radio.channel("app");
-let routerChannel = Radio.channel("router");
+const globalChannel = Radio.channel("app");
 
 /**
  * Setup the app & invoke it, then provide access to the invoked App variable.
@@ -20,11 +19,51 @@ let routerChannel = Radio.channel("router");
  * @module App
  * @namespace App
  */
-let application = Marionette.Application.extend({
+@attribute("region", "body")
+class TurboApp extends Application {
+
     /**
-     * App region
+     * When we call new TurboApp() we setup some stuff.
+     *
+     * @param options {Object} Initialization options
      */
-    region: "body",
+    initialize (options) {
+        super.initialize(options);
+
+        this.layoutView = new LayoutView();
+        this.turboHistory = new TurboHistory();
+
+        /**
+         * Notify the application when the page has changed
+         *
+         * @event app:pageChange
+         * @memberof App
+         * @example
+         * var globalChannel = Backbone.Radio.channel("global");
+         * var that = this;
+         *
+         * // Clean up the dom when the page changes
+         * globalChannel.trigger("app:pageChange", ()  => that.janitorialDuties());
+         */
+        this.listenTo(this.layoutView, "empty", _ => {
+            globalChannel.trigger("app:pageChange");
+            globalChannel.off("app:onBodyClick");
+        });
+
+        /**
+         * Notify the application that the page will change.
+         *
+         * @event app:pageWillChange
+         * @memberof App
+         * @example
+         * var globalChannel = Backbone.Radio.channel("global");
+         * var that = this;
+         *
+         * // Clean up the dom before the page changes
+         * globalChannel.trigger("app:pageWillChange", ()  => that.janitorialDuties());
+         */
+        this.listenTo(this.layoutView, "before:empty", _ => globalChannel.trigger("app:pageWillChange"));
+    }
 
     /**
      * When the DOM is shown, lets bind an event listener for the body click.
@@ -53,98 +92,50 @@ let application = Marionette.Application.extend({
             globalChannel.trigger("app:onBodyClick", ev);
         });
     }
-});
+
+    /**
+     * When the application starts, setup some stuff that can only be accessed after the app has started
+     */
+    onStart () {
+        if (Backbone.history) {
+            Backbone.history.start();
+        }
+
+        /**
+         * Setup Service worker!
+         */
+        if("serviceWorker" in navigator) {
+            // navigator.serviceWorker.register("/sw.js", { scope: "/" })
+            //     .then(registration => console.log("Service Worker Registered"));
+            //
+            // navigator.serviceWorker.ready.then(registration => console.log("Service Worker Ready"));
+        }
+
+        /**
+         * Hide loader
+         */
+        $(".loader").fadeOut();
+
+        this.layoutView.render();
+    }
+
+    /**
+     * Get the content region
+     *
+     * @returns {Region}
+     */
+    get contentRegion () {
+        return this.layoutView.getRegion("content");
+    }
+
+    get navigationRegion () {
+        return this.layoutView.getRegion("navigation");
+    }
+
+}
 
 /** Invoke Application **/
-let App = new application();
-
-/**
- * Start route controller and register a service worker
- */
-App.on("start", () => {
-    if (Backbone.history) {
-        Backbone.history.start({
-            pushState: true
-        });
-    }
-
-    /**
-     * Setup Service worker!
-     */
-    if("serviceWorker" in navigator) {
-        // navigator.serviceWorker.register("/sw.js", { scope: "/" })
-        //     .then(registration => console.log("Service Worker Registered"));
-        //
-        // navigator.serviceWorker.ready.then(registration => console.log("Service Worker Ready"));
-    }
-
-    /**
-     * Hide loader
-     */
-    $(".loader").fadeOut();
-
-});
-
-/**
- * Setup a region for the app & expose it on the App namespace
- * (Essentially providing a singleton)
- *
- * @protected
- */
-App.layoutView = new LayoutView();
-App.layoutView.render();
-
-/**
- * Returns the navigation container
- *
- * @returns {HTMLElement} The navigation region
- * @public
- */
-App.getNavigationContainer = () => App.layoutView.getRegion("navigation");
-
-/**
- * Returns the content container
- *
- * @returns {HTMLElement} The content region
- * @public
- */
-App.getContentContainer = () => App.layoutView.getRegion("content");
-
-/**
- * Notify the application when the page has changed
- *
- * @event app:pageChange
- * @memberof App
- * @example
- * var globalChannel = Backbone.Radio.channel("global");
- * var that = this;
- *
- * // Clean up the dom when the page changes
- * globalChannel.trigger("app:pageChange", ()  => that.janitorialDuties());
- */
-App.layoutView.on("empty", (view) => {
-    globalChannel.trigger("app:pageChange");
-    globalChannel.off("app:onBodyClick");
-});
-
-/**
- * Notify the application that the page will change.
- *
- * @event app:pageWillChange
- * @memberof App
- * @example
- * var globalChannel = Backbone.Radio.channel("global");
- * var that = this;
- *
- * // Clean up the dom before the page changes
- * globalChannel.trigger("app:pageWillChange", ()  => that.janitorialDuties());
- */
-App.layoutView.on("before:empty", (view) => globalChannel.trigger("app:pageWillChange"));
-
-/**
- * Provide a singleton component controller for the app.
- */
-App.Compontents = new ComponentController;
+const App = new TurboApp();
 
 /**
  * Export the application

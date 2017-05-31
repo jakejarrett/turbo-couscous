@@ -1,5 +1,4 @@
-import * as Backbone from "backbone";
-import Marionette, { View } from "marionette";
+import { View } from "marionette";
 import { template, on } from "marionette-decorators";
 import { active } from "../../controllers/decorators";
 import Template from "./navigation.html";
@@ -15,12 +14,18 @@ import Router from "app/routes";
 @template(Template)
 class NavigationView extends View {
 
+    template () {
+        return _.template(Template)({
+            Styles: Styles
+        })
+    }
+
     /**
      * When the template of the page has been updated, re render the template
      * (This won't preserve state)
      */
     initialize () {
-        var that = this;
+        const that = this;
 
         if(module.hot){
             /** Require the template & re-render :) **/
@@ -29,6 +34,8 @@ class NavigationView extends View {
                 that.setItemAsActive(that.active);
             });
         }
+
+        console.log(Styles);
     }
 
     /**
@@ -40,26 +47,17 @@ class NavigationView extends View {
         /** Store active in memory **/
         this.active = item;
 
-        this.$el.find(".active")
-            .removeClass("active")
+        this.$el.find(`${Styles.active}`)
+            .removeClass(`${Styles.active}`)
             .find(".sr-only")
             .remove();
 
         let $el = this.$el.find("#" + item);
-        $el.addClass("active")
+        $el.addClass(`${Styles.active}`)
             .children()
             .html(`${$el.children().html()} <span class="sr-only">(current)</span>`);
     }
 
-    /**
-     * When the nav item was clicked, we pass navigation to backbone instead.
-     * @param e {Event} The click event
-     */
-    @on("click .nav-item")
-    onNavItemClick (e) {
-        e.preventDefault();
-        Router.navigate(e.target.getAttribute("href"), {trigger: true});
-    }
 }
 
 /**

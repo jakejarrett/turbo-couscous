@@ -4,7 +4,7 @@
  * Pull in all our dependencies
  */
 const webpack = require("webpack");
-const webpackConfig = require("../webpack.config.js");
+const webpackConfig = require("../webpack.conf.js");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
 const DashboardPlugin = require('webpack-dashboard/plugin');
